@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AIによる学習過程の変革：4つのステップ</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: "Inter", sans-serif;
+            background-color: #f0f4f8; /* Light background */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to top */
+            min-height: 100vh;
+            padding: 2rem;
+            box-sizing: border-box;
+        }
+        .container {
+            max-width: 900px; /* Slightly wider to accommodate more content */
+            width: 100%;
+            background-color: #ffffff;
+            border-radius: 1.5rem; /* More rounded */
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem; /* Increased padding */
+            box-sizing: border-box;
+        }
+        .main-title {
+            font-size: 2.5rem; /* Larger for main title */
+            font-weight: bold;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 0.75rem;
+            line-height: 1.2;
+        }
+        .sub-title {
+            font-size: 1.25rem;
+            color: #607d8b;
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+        .process-section { /* Main section for each learning step */
+            margin-bottom: 3.5rem; /* More space between main sections */
+            text-align: center;
+            padding-bottom: 1.5rem; /* Padding before the main section separator */
+        }
+        .process-section:not(:last-child) {
+            border-bottom: 3px solid #e0e0e0; /* Stronger separator for main sections */
+            margin-bottom: 3.5rem;
+        }
+
+        .section-title { /* Title for each sub-concept (e.g., 明確化) */
+            position: relative;
+            padding-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #34495e; /* Darker title color */
+            text-align: center;
+        }
+        .section-title::after {
+            content: '';
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            bottom: 0;
+            width: 50px;
+            height: 4px;
+            background-color: #3498db; /* Blue accent */
+            border-radius: 2px;
+        }
+        .concept-visual-group { /* Group for Before/After visuals */
+            display: flex;
+            flex-direction: column; /* Stack vertically */
+            align-items: center; /* Center visuals */
+            gap: 1.5rem; /* Space between Before and After */
+            margin-top: 2rem;
+            margin-bottom: 2rem; /* Space after each concept visual group */
+        }
+        .visual-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        .visual-label {
+            font-weight: bold;
+            font-size: 1.125rem;
+            color: #555;
+            margin-bottom: 0.75rem;
+        }
+        .concept-visual {
+            border-radius: 6px;
+            transition: all 0.5s ease-in-out;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #f8f8f8; /* Base background for visuals */
+            border: 1px solid #e0e0e0; /* Subtle border */
+            height: 60px; /* Consistent height for visual areas */
+            width: 70%; /* Consistent width for visual areas */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* --- 課題設定: 明確化 (Clarity) の表現 --- */
+        .clarity-visual .shape {
+            width: 60%;
+            height: 30px;
+            border-radius: 4px;
+        }
+        .clarity-before .shape {
+            background-color: #bdc3c7; /* Grey */
+            filter: blur(5px); /* Blurry effect */
+        }
+        .clarity-after .shape {
+            background-color: #27ae60; /* Green */
+        }
+
+        /* --- 課題設定: 具体化 (Concretization) の表現 --- */
+        .concretization-visual {
+            display: flex; /* For arranging shapes */
+            gap: 5px; /* Space between shapes */
+            padding: 10px;
+            box-sizing: border-box;
+        }
+        .concretization-before .shape {
+            width: 50px;
+            height: 40px;
+            border-radius: 50%; /* Oval/blob-like */
+            background-color: #d1b2e8; /* Light purple */
+            filter: blur(3px); /* Slightly undefined */
+        }
+        .concretization-after .shape {
+            width: 30px;
+            height: 30px;
+            background-color: #7a36c7; /* Dark purple */
+            border-radius: 4px; /* Distinct shape */
+        }
+
+        /* --- 課題設定: 多角的視点 (Multi-faceted Perspective) の表現 --- */
+        .perspective-visual {
+            display: flex;
+            position: relative;
+            width: 70%;
+        }
+        .perspective-before .line {
+            width: 80%;
+            height: 10px;
+            background-color: #b0c4de; /* Light muted blue */
+            border-radius: 5px;
+        }
+        .perspective-after .line {
+            width: 50%; /* Increased width for longer lines */
+            height: 6px; /* Slightly thinner */
+            background-color: #2980b9; /* Deep blue */
+            border-radius: 3px;
+            position: absolute;
+            transform-origin: center center; /* Ensure rotation from center */
+        }
+        /* Adjusted translateX for longer lines to maintain radial appearance */
+        .perspective-after .line:nth-child(1) { transform: rotate(0deg) translateX(25px); }
+        .perspective-after .line:nth-child(2) { transform: rotate(30deg) translateX(25px); }
+        .perspective-after .line:nth-child(3) { transform: rotate(60deg) translateX(25px); }
+        .perspective-after .line:nth-child(4) { transform: rotate(90deg) translateX(25px); }
+        .perspective-after .line:nth-child(5) { transform: rotate(120deg) translateX(25px); }
+        .perspective-after .line:nth-child(6) { transform: rotate(150deg) translateX(25px); }
+        .perspective-after .line:nth-child(7) { transform: rotate(180deg) translateX(25px); }
+        .perspective-after .line:nth-child(8) { transform: rotate(210deg) translateX(25px); }
+        .perspective-after .line:nth-child(9) { transform: rotate(240deg) translateX(25px); }
+        .perspective-after .line:nth-child(10) { transform: rotate(270deg) translateX(25px); }
+        .perspective-after .line:nth-child(11) { transform: rotate(300deg) translateX(25px); }
+        .perspective-after .line:nth-child(12) { transform: rotate(330deg) translateX(25px); }
+        .perspective-after .line-group {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* --- 情報収集: 時間, 質, 量 の表現 --- */
+        .info-collection-visual .line {
+            border-radius: 6px;
+            transition: all 0.5s ease-in-out;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        /* 時間短縮 */
+        .time-reduction-before { width: 80%; height: 12px; background-color: #bdc3c7; }
+        .time-reduction-after { width: 35%; height: 12px; background-color: #27ae60; }
+        /* 質が深まる */
+        .quality-deepening-before { width: 60%; height: 12px; background: linear-gradient(to right, #FFC0CB, #FFD700, #98FB98, #ADD8E6, #CCCCFF); }
+        .quality-deepening-after { width: 60%; height: 12px; background: linear-gradient(to right, #FF0000, #FFA500, #FFFF00, #008000, #0000FF, #4B0082, #EE82EE); }
+        /* 量が増加 */
+        .quantity-increase-before { width: 70%; height: 12px; background-color: #d1b2e8; }
+        .quantity-increase-after { width: 70%; height: 20px; background-color: #7a36c7; }
+
+        /* --- 整理分析: 構造化, 洞察力, 適時性 の表現 --- */
+        .structuredness-visual { width: 70%; height: 60px; display: flex; align-items: center; justify-content: center; background-color: #f8f8f8; border: 1px solid #e0e0e0; border-radius: 0.75rem; position: relative; overflow: hidden; }
+        .structuredness-dot { position: absolute; width: 8px; height: 8px; border-radius: 50%; background-color: #607d8b; }
+        .structuredness-before .structuredness-dot:nth-child(1) { top: 15px; left: 20%; }
+        .structuredness-before .structuredness-dot:nth-child(2) { top: 25px; left: 30%; }
+        .structuredness-before .structuredness-dot:nth-child(3) { top: 35px; left: 25%; }
+        .structuredness-before .structuredness-dot:nth-child(4) { top: 10px; left: 70%; }
+        .structuredness-before .structuredness-dot:nth-child(5) { top: 20px; left: 80%; }
+        .structuredness-before .structuredness-dot:nth-child(6) { top: 30px; left: 75%; }
+        .structuredness-after .structuredness-dot { position: relative; width: 8px; height: 8px; border-radius: 50%; background-color: #2980b9; margin: 4px; }
+        .structuredness-after { display: grid; grid-template-columns: repeat(4, 1fr); grid-template-rows: repeat(2, 1fr); gap: 2px; padding: 10px; box-sizing: border-box; background-color: #e3f2fd; border: 1px solid #add8e6; border-radius: 0.75rem; align-items: center; justify-content: center; }
+
+        .insightfulness-visual { width: 70%; height: 60px; display: flex; align-items: center; justify-content: center; background-color: #f8f8f8; border: 1px solid #e0e0e0; border-radius: 0.75rem; position: relative; }
+        .insightfulness-before .insight-line { width: 80%; height: 8px; background-color: #b0c4de; border-radius: 4px; }
+        .insightfulness-after .insight-line { width: 80%; height: 8px; background: linear-gradient(to right, #0a5f97, #00b0ff, #0a5f97); border-radius: 4px; position: relative; box-shadow: 0 0 15px rgba(0, 176, 255, 0.7); }
+
+        .timeliness-visual .line { height: 12px; border-radius: 6px; transition: all 0.5s ease-in-out; box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); }
+        .timeliness-before { width: 80%; background-color: #e74c3c; }
+        .timeliness-after { width: 35%; background-color: #1abc9c; }
+
+        /* --- まとめ表現: 効率性, 多様性, 伝達力 の表現 --- */
+        .efficiency-visual { width: 70%; }
+        .efficiency-visual .line { height: 12px; border-radius: 6px; }
+        .efficiency-before .line { width: 80%; background-color: #bdc3c7; }
+        .efficiency-after .line { width: 40%; background-color: #27ae60; }
+
+        .diversity-visual { width: 70%; }
+        .diversity-visual .shape { position: absolute; background-color: #6a5acd; border-radius: 4px; }
+        .diversity-before .shape { width: 40px; height: 40px; }
+        .diversity-after { display: flex; gap: 10px; padding: 10px; box-sizing: border-box; }
+        .diversity-after .shape { position: relative; width: 30px; height: 30px; background-color: #6a5acd; opacity: 0.8; }
+        .diversity-after .shape.circle { border-radius: 50%; background-color: #dc3912; }
+        .diversity-after .shape.triangle { clip-path: polygon(50% 0%, 0% 100%, 100% 100%); background-color: #ff9900; }
+        .diversity-after .shape.square { background-color: #008000; }
+
+        .impact-visual { width: 70%; }
+        .impact-visual .line { width: 80%; height: 12px; border-radius: 6px; }
+        .impact-before .line { background-color: rgba(189, 195, 199, 0.5); filter: blur(2px); }
+        .impact-after .line { background-color: #3498db; box-shadow: 0 0 15px rgba(52, 152, 219, 0.7); }
+
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 1.5rem;
+            }
+            .main-title {
+                font-size: 2rem;
+            }
+            .sub-title {
+                font-size: 1rem;
+            }
+            .process-section {
+                margin-bottom: 2.5rem;
+            }
+            .process-section:not(:last-child) {
+                margin-bottom: 2.5rem;
+            }
+            .section-title {
+                font-size: 1.1rem;
+                margin-bottom: 1rem;
+            }
+            .visual-label {
+                font-size: 0.9rem;
+            }
+            .concept-visual-group {
+                margin-top: 1.5rem;
+                margin-bottom: 1.5rem;
+            }
+            .concept-visual {
+                height: 50px;
+            }
+            .concretization-before .shape {
+                width: 40px;
+                height: 30px;
+            }
+            .concretization-after .shape {
+                width: 25px;
+                height: 25px;
+            }
+            .perspective-after .line {
+                width: 40%; /* Adjust for smaller screens */
+                height: 5px;
+                transform: rotate(var(--angle)) translateX(15px); /* Adjust translateX */
+            }
+            .structuredness-dot {
+                width: 6px;
+                height: 6px;
+            }
+            .structuredness-after {
+                grid-template-columns: repeat(3, 1fr);
+                grid-template-rows: repeat(2, 1fr);
+                padding: 5px;
+            }
+            .diversity-after .shape {
+                width: 25px;
+                height: 25px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1 class="main-title">AIによる学習過程の変革</h1>
+        <p class="sub-title">先生方の業務を効率化し、教育の質を高めるAIの力</p>
+
+        <!-- 課題設定 (Problem Setting) -->
+        <div class="process-section">
+            <h2 class="main-process-title text-2xl font-bold text-blue-700 mb-6">1. 課題設定</h2>
+            <div class="section-title">明確化</div>
+            <div class="concept-visual-group">
+                <div class="visual-item">
+                    <div class="visual-label">Before</div>
+                    <div class="concept-visual clarity-visual clarity-before">
+                        <div class="shape"></div>
+                    </div>
+                </div>
+                <div class="visual-item">
+                    <div class="visual-label">After</div>
+                    <div class="concept-visual clarity-visual clarity-after">
+                        <div class="shape"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-title">具体化</div>
+            <div class="concept-visual-group">
+                <div class="visual-item">
+                    <div class="visual-label">Before</div>
+                    <div class="concept-visual concretization-visual concretization-before">
+                        <div class="shape"></div>
+                    </div>
+                </div>
+                <div class="visual-item">
+                    <div class="visual-label">After</div>
+                    <div class="concept-visual concretization-visual concretization-after">
+                        <div class="shape"></div>
+                        <div class="shape"></div>
+                        <div class="shape"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-title">多角的視点</div>
+            <div class="concept-visual-group">
+                <div class="visual-item">
+                    <div class="visual-label">Before</div>
+                    <div class="concept-visual perspective-visual perspective-before">
+                        <div class="line"></div>
+                    </div>
+                </div>
+                <div class="visual-item">
+                    <div class="visual-label">After</div>
+                    <div class="concept-visual perspective-visual perspective-after">
+                        <div class="line-group">
+                            <div class="line" style="--angle:0deg;"></div>
+                            <div class="line" style="--angle:30deg;"></div>
+                            <div class="line" style="--angle:60deg;"></div>
+                            <div class="line" style="--angle:90deg;"></div>
+                            <div class="line" style="--angle:120deg;"></div>
+                            <div class="line" style="--angle:150deg;"></div>
+                            <div class="line" style="--angle:180deg;"></div>
+                            <div class="line" style="--angle:210deg;"></div>
+                            <div class="line" style="--angle:240deg;"></div>
+                            <div class="line" style="--angle:270deg;"></div>
+                            <div class="line" style="--angle:300deg;"></div>
+                            <div class="line" style="--angle:330deg;"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 情報収集 (Information Gathering) -->
+        <div class="process-section">
+            <h2 class="main-process-title text-2xl font-bold text-blue-700 mb-6">2. 情報収集</h2>
+            <div class="section-title">時間</div>
+            <div class="concept-visual-group">
+                <div class="visual-item">
+                    <div class="visual-label">Before</div>
+                    <div class="concept-visual info-collection-visual time-reduction-before">
+                        <div class="line"></div>
+                    </div>
+                </div>
+                <div class="visual-item">
+                    <div class="visual-label">After</div>
+                    <div class="concept-visual info-collection-visual time-reduction-after">
+                        <div class="line"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-title">質</div>
+            <div class="concept-visual-group">
+                <div class="visual-item">
+                    <div class="visual-label">Before</div>
+                    <div class="concept-visual info-collection-visual quality-deepening-before">
+                        <div class="line"></div>
+                    </div>
+                </div>
+                <div class="visual-item">
+                    <div class="visual-label">After</div>
+                    <div class="concept-visual info-collection-visual quality-deepening-after">
+                        <div class="line"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-title">量</div>
+            <div class="concept-visual-group">
+                <div class="visual-item">
+                    <div class="visual-label">Before</div>
+                    <div class="concept-visual info-collection-visual quantity-increase-before">
+                        <div class="line"></div>
+                    </div>
+                </div>
+                <div class="visual-item">
+                    <div class="visual-label">After</div>
+                    <div class="concept-visual info-collection-visual quantity-increase-after">
+                        <div class="line"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 整理分析 (Organization & Analysis) -->
+        <div class="process-section">
+            <h2 class="main-process-title text-2xl font-bold text-blue-700 mb-6">3. 整理分析</h2>
+            <div class="section-title">構造化</div>
+            <div class="concept-visual-group">
+                <div class="visual-item">
+                    <div class="visual-label">Before</div>
+                    <div class="concept-visual structuredness-visual structuredness-before">
+                        <div class="structuredness-dot"></div>
+                        <div class="structuredness-dot"></div>
+                        <div class="structuredness-dot"></div>
+                        <div class="structuredness-dot"></div>
+                        <div class="structuredness-dot"></div>
+                        <div class="structuredness-dot"></div>
+                    </div>
+                </div>
+                <div class="visual-item">
+                    <div class="visual-label">After</div>
+                    <div class="concept-visual structuredness-visual structuredness-after">
+                        <div class="structuredness-dot"></div>
+                        <div class="structuredness-dot"></div>
+                        <div class="structuredness-dot"></div>
+                        <div class="structuredness-dot"></div>
+                        <div class="structuredness-dot"></div>
+                        <div class="structuredness-dot"></div>
+                        <div class="structuredness-dot"></div>
+                        <div class="structuredness-dot"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-title">洞察力</div>
+            <div class="concept-visual-group">
+                <div class="visual-item">
+                    <div class="visual-label">Before</div>
+                    <div class="concept-visual insightfulness-visual insightfulness-before">
+                        <div class="insight-line"></div>
+                    </div>
+                </div>
+                <div class="visual-item">
+                    <div class="visual-label">After</div>
+                    <div class="concept-visual insightfulness-visual insightfulness-after">
+                        <div class="insight-line"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-title">適時性</div>
+            <div class="concept-visual-group">
+                <div class="visual-item">
+                    <div class="visual-label">Before</div>
+                    <div class="concept-visual timeliness-visual timeliness-before">
+                        <div class="line"></div>
+                    </div>
+                </div>
+                <div class="visual-item">
+                    <div class="visual-label">After</div>
+                    <div class="concept-visual timeliness-visual timeliness-after">
+                        <div class="line"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- まとめ表現 (Summary Expression) -->
+        <div class="process-section">
+            <h2 class="main-process-title text-2xl font-bold text-blue-700 mb-6">4. まとめ表現</h2>
+            <div class="section-title">効率性</div>
+            <div class="concept-visual-group">
+                <div class="visual-item">
+                    <div class="visual-label">Before</div>
+                    <div class="concept-visual efficiency-visual efficiency-before">
+                        <div class="line"></div>
+                    </div>
+                </div>
+                <div class="visual-item">
+                    <div class="visual-label">After</div>
+                    <div class="concept-visual efficiency-visual efficiency-after">
+                        <div class="line"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-title">多様性</div>
+            <div class="concept-visual-group">
+                <div class="visual-item">
+                    <div class="visual-label">Before</div>
+                    <div class="concept-visual diversity-visual diversity-before">
+                        <div class="shape"></div>
+                    </div>
+                </div>
+                <div class="visual-item">
+                    <div class="visual-label">After</div>
+                    <div class="concept-visual diversity-visual diversity-after">
+                        <div class="shape square"></div>
+                        <div class="shape circle"></div>
+                        <div class="shape triangle"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="section-title">伝達力</div>
+            <div class="concept-visual-group">
+                <div class="visual-item">
+                    <div class="visual-label">Before</div>
+                    <div class="concept-visual impact-visual impact-before">
+                        <div class="line"></div>
+                    </div>
+                </div>
+                <div class="visual-item">
+                    <div class="visual-label">After</div>
+                    <div class="concept-visual impact-visual impact-after">
+                        <div class="line"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
