@@ -26,7 +26,13 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
             padding: 2.5rem; /* パディングを増やす */
             box-sizing: border-box;
+            opacity: 0; /* トップ画面の初期状態は非表示 */
+            transition: opacity 0.5s ease-in-out; /* フェードインアニメーション */
         }
+        .container.visible {
+            opacity: 1; /* 表示状態 */
+        }
+
         .main-title {
             font-size: 2.5rem; /* メインタイトルを大きく */
             font-weight: bold;
@@ -313,7 +319,8 @@
             justify-content: center;
             gap: 0.5rem; /* ボタン間のデフォルト間隔 */
             z-index: 1000;
-            background-color: rgba(255, 255, 255, 0.9); /* 半透明の背景 */
+            /* 背景色を変更 */
+            background-color: rgba(226, 232, 240, 0.95); /* 落ち着いたグレー */
             padding: 1rem 1.5rem; /* デスクトップのデフォルトパディング */
             border-radius: 1rem;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
@@ -595,7 +602,10 @@
 
         <!-- 4つの業務プロセスをまとめる新しいコンテナ -->
         <div id="all-process-steps" class="process-section hidden">
-            <h2 class="main-process-title text-2xl font-bold text-blue-700 mb-6">4つの業務プロセスの変容</h2>
+            <h2 class="main-process-title text-2xl font-bold text-gray-800 mb-6 text-center">
+                <svg class="inline-block w-6 h-6 mr-2 text-blue-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                4つの業務プロセスの変容
+            </h2>
             <!-- 課題設定 (Problem Setting) -->
             <div class="process-section step-1 visible" id="process-step-1">
                 <h2 class="main-process-title text-2xl font-bold text-blue-700 mb-6">1. 課題設定</h2>
@@ -1018,6 +1028,7 @@
         <!-- AIがもたらす「ゆとり」が先生にもたらす変容 -->
         <div id="teacher-transformation" class="process-section hidden" style="background-color: #e0f2f7;">
             <h2 class="main-process-title text-2xl font-bold text-gray-800 mb-8 text-center">
+                <svg class="inline-block w-6 h-6 mr-2 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
                 AIがもたらす「ゆとり」が先生にもたらす変容
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -1085,6 +1096,7 @@
         <!-- AI時代に「人でしかできないこと」：先生の揺るぎない存在意義 - インフォグラフィック -->
         <div id="teacher-purpose" class="process-section hidden" style="background-color: #e8f5e9;">
             <h2 class="main-process-title text-2xl font-bold text-gray-800 mb-8 text-center">
+                <svg class="inline-block w-6 h-6 mr-2 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"></path></svg>
                 AI時代に「人でしかできないこと」：先生の揺るぎない存在意義
             </h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -1260,6 +1272,7 @@
 
         // トップ画面に戻る（すべてのセクションを非表示にする）関数
         function resetToTop() {
+            // すべてのセクションを非表示にする
             allSectionIds.forEach(sectionId => {
                 const section = document.getElementById(sectionId);
                 if (section) {
@@ -1284,6 +1297,15 @@
                 }
             });
 
+            // トップ画面のコンテナを表示
+            const container = document.querySelector('.container');
+            if (container) {
+                container.classList.remove('hidden');
+                setTimeout(() => {
+                    container.classList.add('visible');
+                }, 10);
+            }
+
             window.scrollTo({
                 top: 0,
                 behavior: 'smooth'
@@ -1297,4 +1319,3 @@
     </script>
 </body>
 </html>
-
