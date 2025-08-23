@@ -1206,13 +1206,6 @@
 
         // セクションを表示し、他のセクションを非表示にする関数
         function scrollToSection(id, clickedButton) {
-            // トップ画面のコンテナを非表示にする
-            const mainContainer = document.querySelector('.container');
-            if (mainContainer) {
-                mainContainer.classList.add('hidden');
-                mainContainer.classList.remove('visible');
-            }
-
             // すべてのセクションを非表示にする
             allSectionIds.forEach(sectionId => {
                 const section = document.getElementById(sectionId);
@@ -1251,19 +1244,19 @@
                 // クリックされたボタンにアクティブクラスを追加する
                 if (clickedButton) {
                     clickedButton.classList.add('active');
-                    // モバイルの場合、ボタンを中央にスクロール
-                    if (window.innerWidth <= 768) {
-                        const fixedNavContainer = document.querySelector('.fixed-nav-container');
-                        if (fixedNavContainer) {
-                            const buttonRect = clickedButton.getBoundingClientRect();
-                            const containerRect = fixedNavContainer.getBoundingClientRect();
-                            const scrollLeft = clickedButton.offsetLeft - (containerRect.width / 2) + (buttonRect.width / 2);
-                            fixedNavContainer.scrollTo({
-                                left: scrollLeft,
-                                behavior: 'smooth'
-                            });
+                }
+
+                // 「4つの業務プロセスの変容」がクリックされた場合、その中のすべてのステップを表示する
+                if (id === 'all-process-steps') {
+                    individualProcessStepIds.forEach(stepId => {
+                        const step = document.getElementById(stepId);
+                        if (step) {
+                            step.classList.remove('hidden');
+                            setTimeout(() => {
+                                step.classList.add('visible');
+                            }, 10);
                         }
-                    }
+                    });
                 }
 
                 const offset = 80; // 固定ナビゲーションの高さ + いくらかのパディング
