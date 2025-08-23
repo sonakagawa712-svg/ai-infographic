@@ -8,27 +8,27 @@
     <style>
         body {
             font-family: "Inter", sans-serif;
-            background-color: #f0f4f8; /* Light background */
+            background-color: #f0f4f8; /* 薄い背景色 */
             display: flex;
             justify-content: center;
-            align-items: flex-start; /* Align to top */
+            align-items: flex-start; /* 上部に揃える */
             min-height: 100vh;
             padding: 2rem;
             box-sizing: border-box;
             /* 固定ナビゲーションの高さに合わせてpadding-bottomを追加 */
-            padding-bottom: 12rem; /* デフォルト値。メディアクエリで調整 */
+            padding-bottom: 8rem; /* デスクトップのデフォルト値 */
         }
         .container {
-            max-width: 900px; /* Slightly wider to accommodate more content */
+            max-width: 900px; /* コンテンツに合わせて少し広めに */
             width: 100%;
             background-color: #ffffff;
-            border-radius: 1.5rem; /* More rounded */
+            border-radius: 1.5rem; /* より丸く */
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
-            padding: 2.5rem; /* Increased padding */
+            padding: 2.5rem; /* パディングを増やす */
             box-sizing: border-box;
         }
         .main-title {
-            font-size: 2.5rem; /* Larger for main title */
+            font-size: 2.5rem; /* メインタイトルを大きく */
             font-weight: bold;
             color: #2c3e50;
             text-align: center;
@@ -39,20 +39,20 @@
             font-size: 1.25rem;
             color: #607d8b;
             text-align: center;
-            margin-bottom: 0.5rem; /* Reduced margin to bring name closer */
+            margin-bottom: 0.5rem; /* 名前との間隔を詰める */
         }
         .presenter-info {
             font-size: 1.1rem;
             color: #4a5568;
-            text-align: right; /* Changed to right align */
-            margin-bottom: 2.5rem; /* Space after presenter info */
+            text-align: right; /* 右揃え */
+            margin-bottom: 2.5rem; /* 発表者情報の下にスペース */
         }
-        .process-section { /* Main section for each learning step */
-            margin-bottom: 3.5rem; /* More space between main sections */
+        .process-section { /* 各学習ステップのメインセクション */
+            margin-bottom: 3.5rem; /* メインセクション間のスペース */
             text-align: center;
-            padding: 1.5rem 2.5rem; /* Padding inside the section */
-            border-radius: 1rem; /* Rounded corners for sections */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* Subtle shadow for sections */
+            padding: 1.5rem 2.5rem; /* セクション内のパディング */
+            border-radius: 1rem; /* セクションの角を丸く */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05); /* セクションの影 */
             opacity: 0; /* 初期状態は非表示 */
             transition: opacity 0.5s ease-in-out; /* フェードインアニメーション */
         }
@@ -60,24 +60,24 @@
             opacity: 1; /* 表示状態 */
         }
         .process-section:not(:last-child) {
-            border-bottom: none; /* Remove bottom border as background color will separate */
+            border-bottom: none; /* 背景色で区切るため下線なし */
             margin-bottom: 3.5rem;
         }
 
-        /* Distinct background colors for each process section */
-        .process-section.step-1 { background-color: #e0f2f7; /* Light Blue for 課題設定 */ }
-        .process-section.step-2 { background-color: #e8f5e9; /* Light Green for 情報収集 */ }
-        .process-section.step-3 { background-color: #f3e5f5; /* Light Purple for 整理分析 */ }
-        .process-section.step-4 { background-color: #fff3e0; /* Light Orange for まとめ表現 */ }
+        /* 各プロセスセクションの背景色 */
+        .process-section.step-1 { background-color: #e0f2f7; /* 課題設定の薄い青 */ }
+        .process-section.step-2 { background-color: #e8f5e9; /* 情報収集の薄い緑 */ }
+        .process-section.step-3 { background-color: #f3e5f5; /* 整理分析の薄い紫 */ }
+        .process-section.step-4 { background-color: #fff3e0; /* まとめ表現の薄いオレンジ */ }
 
 
-        .section-title { /* Title for each sub-concept (e.g., 明確化) */
+        .section-title { /* サブコンセプトのタイトル (例: 明確化) */
             position: relative;
             padding-bottom: 0.5rem;
             margin-bottom: 1.5rem;
             font-size: 1.5rem;
             font-weight: bold;
-            color: #34495e; /* Darker title color */
+            color: #34495e; /* 暗めのタイトル色 */
             text-align: center;
         }
         .section-title::after {
@@ -88,16 +88,16 @@
             bottom: 0;
             width: 50px;
             height: 4px;
-            background-color: #3498db; /* Blue accent */
+            background-color: #3498db; /* 青のアクセント */
             border-radius: 2px;
         }
-        .concept-visual-group { /* Group for Before/After visuals */
+        .concept-visual-group { /* Before/Afterのビジュアルグループ */
             display: flex;
-            flex-direction: column; /* Stack vertically */
-            align-items: center; /* Center visuals */
-            gap: 1.5rem; /* Space between Before and After */
+            flex-direction: column; /* 縦に並べる */
+            align-items: center; /* 中央揃え */
+            gap: 1.5rem; /* BeforeとAfterの間隔 */
             margin-top: 2rem;
-            margin-bottom: 2rem; /* Space after each concept visual group */
+            margin-bottom: 2rem; /* 各ビジュアルグループの下にスペース */
         }
         .visual-item {
             display: flex;
@@ -115,10 +115,10 @@
             border-radius: 6px;
             transition: all 0.5s ease-in-out;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-            background-color: #f8f8f8; /* Base background for visuals */
-            border: 1px solid #e0e0e0; /* Subtle border */
-            height: 60px; /* Consistent height for visual areas */
-            width: 70%; /* Consistent width for visual areas */
+            background-color: #f8f8f8; /* ビジュアルのベース背景色 */
+            border: 1px solid #e0e0e0; /* 薄いボーダー */
+            height: 60px; /* ビジュアルエリアの高さ */
+            width: 70%; /* ビジュアルエリアの幅 */
             display: flex;
             align-items: center;
             justify-content: center;
@@ -126,16 +126,16 @@
             overflow: hidden;
         }
 
-        /* Explanation Row Styles */
+        /* 説明行のスタイル */
         .explanation-row {
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 1rem; /* Space between boxes and arrow */
-            margin-top: -1rem; /* Pull up closer to visual */
-            margin-bottom: 2rem; /* Space after explanation */
-            width: 90%; /* Wider to fit content */
-            max-width: 600px; /* Limit max width */
+            gap: 1rem; /* ボックスと矢印の間隔 */
+            margin-top: -1rem; /* ビジュアルに近づける */
+            margin-bottom: 2rem; /* 説明の下にスペース */
+            width: 90%; /* 幅を広げる */
+            max-width: 600px; /* 最大幅を制限 */
             margin-left: auto;
             margin-right: auto;
         }
@@ -143,19 +143,19 @@
             background-color: #ecf0f1;
             border-radius: 0.75rem;
             padding: 0.75rem 1rem;
-            flex: 1; /* Take equal space */
+            flex: 1; /* 等しいスペースを占める */
             font-size: 0.9rem;
             color: #34495e;
-            text-align: left; /* Align text left within box */
-            min-height: 50px; /* Ensure consistent height */
+            text-align: left; /* ボックス内のテキストを左揃え */
+            min-height: 50px; /* 高さを揃える */
             display: flex;
-            align-items: center; /* Vertically center text */
+            align-items: center; /* テキストを垂直方向中央揃え */
         }
         .explanation-arrow {
             width: 24px;
             height: 24px;
-            color: #3498db; /* Blue arrow */
-            flex-shrink: 0; /* Prevent arrow from shrinking */
+            color: #3498db; /* 青い矢印 */
+            flex-shrink: 0; /* 矢印が縮まないようにする */
         }
         .explanation-arrow svg {
             width: 100%;
@@ -165,8 +165,8 @@
             width: 1.25rem; /* 20px */
             height: 1.25rem; /* 20px */
             margin-right: 0.5rem;
-            flex-shrink: 0; /* Prevent shrinking */
-            color: #34495e; /* Default icon color */
+            flex-shrink: 0; /* 縮まないようにする */
+            color: #34495e; /* デフォルトのアイコン色 */
         }
 
         /* --- 課題設定: 明確化 (Clarity) の表現 --- */
@@ -176,32 +176,32 @@
             border-radius: 4px;
         }
         .clarity-before .shape {
-            background-color: #bdc3c7; /* Grey */
-            filter: blur(5px); /* Blurry effect */
+            background-color: #bdc3c7; /* グレー */
+            filter: blur(5px); /* ぼかし効果 */
         }
         .clarity-after .shape {
-            background-color: #27ae60; /* Green */
+            background-color: #27ae60; /* 緑 */
         }
 
         /* --- 課題設定: 具体化 (Concretization) の表現 --- */
         .concretization-visual {
-            display: flex; /* For arranging shapes */
-            gap: 5px; /* Space between shapes */
+            display: flex; /* 図形を並べるため */
+            gap: 5px; /* 図形間の間隔 */
             padding: 10px;
             box-sizing: border-box;
         }
         .concretization-before .shape {
             width: 50px;
             height: 40px;
-            border-radius: 50%; /* Oval/blob-like */
-            background-color: #d1b2e8; /* Light purple */
-            filter: blur(3px); /* Slightly undefined */
+            border-radius: 50%; /* 楕円形 */
+            background-color: #d1b2e8; /* 薄い紫 */
+            filter: blur(3px); /* 少し不明瞭 */
         }
         .concretization-after .shape {
             width: 30px;
             height: 30px;
-            background-color: #7a36c7; /* Dark purple */
-            border-radius: 4px; /* Distinct shape */
+            background-color: #7a36c7; /* 濃い紫 */
+            border-radius: 4px; /* はっきりした形 */
         }
 
         /* --- 課題設定: 多角的視点 (Multi-faceted Perspective) の表現 --- */
@@ -213,18 +213,18 @@
         .perspective-before .line {
             width: 80%;
             height: 10px;
-            background-color: #b0c4de; /* Light muted blue */
+            background-color: #b0c4de; /* 薄いミュートブルー */
             border-radius: 5px;
         }
         .perspective-after .line {
-            width: 50%; /* Increased width for longer lines */
-            height: 6px; /* Slightly thinner */
-            background-color: #2980b9; /* Deep blue */
+            width: 50%; /* 線を長くする */
+            height: 6px; /* 少し細く */
+            background-color: #2980b9; /* 濃い青 */
             border-radius: 3px;
             position: absolute;
-            transform-origin: center center; /* Ensure rotation from center */
+            transform-origin: center center; /* 中央から回転 */
         }
-        /* Adjusted translateX for longer lines to maintain radial appearance */
+        /* 長い線のためにtranslateXを調整し、放射状に見せる */
         .perspective-after .line:nth-child(1) { transform: rotate(0deg) translateX(25px); }
         .perspective-after .line:nth-child(2) { transform: rotate(30deg) translateX(25px); }
         .perspective-after .line:nth-child(3) { transform: rotate(60deg) translateX(25px); }
@@ -302,33 +302,27 @@
         .impact-before .line { background-color: rgba(189, 195, 199, 0.5); filter: blur(2px); }
         .impact-after .line { background-color: #3498db; box-shadow: 0 0 15px rgba(52, 152, 219, 0.7); }
 
-        /* Fixed Navigation Container */
+        /* 固定ナビゲーションコンテナ */
         .fixed-nav-container {
             position: fixed;
-            bottom: 1rem; /* Adjust as needed */
+            bottom: 1rem; /* 下からの距離 */
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            flex-direction: column; /* Stack buttons vertically */
-            align-items: center;
-            gap: 0.5rem;
+            flex-wrap: wrap; /* デフォルトで折り返しを許可 (モバイルファースト) */
+            justify-content: center;
+            gap: 0.5rem; /* ボタン間のデフォルト間隔 */
             z-index: 1000;
-            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent background */
-            padding: 0.75rem 1rem;
+            background-color: rgba(255, 255, 255, 0.9); /* 半透明の背景 */
+            padding: 1rem 1.5rem; /* デスクトップのデフォルトパディング */
             border-radius: 1rem;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
-        }
-        @media (min-width: 768px) {
-            .fixed-nav-container {
-                flex-direction: row; /* Horizontal on larger screens */
-                bottom: 2rem;
-                padding: 1rem 1.5rem;
-            }
+            width: auto; /* デスクトップでは幅を自動調整 */
+            max-width: calc(100% - 4rem); /* コンテナの左右に2remずつパディングを確保 */
         }
 
-
-        /* General scroll button styles for existing buttons */
-        .scroll-button {
+        /* 全てのスクロールボタンの共通スタイル */
+        .scroll-button, .process-category-button {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -339,80 +333,61 @@
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease-in-out;
-            margin: 0.25rem; /* Reduced margin for fixed nav */
+            margin: 0.25rem; /* 固定ナビゲーション内のマージン */
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            border: 2px solid transparent; /* default transparent border */
+            border: 2px solid transparent; /* デフォルトは透明なボーダー */
+            white-space: nowrap; /* ボタン内のテキストが改行されないようにする */
         }
-        .scroll-button:hover {
+        .scroll-button:hover, .process-category-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
         }
-        /* Specific colors for "ゆとり" and "存在意義" buttons */
+
+        /* 「AIがもたらす『ゆとり』の変容」ボタンのスタイル */
         .scroll-button.primary {
-            background-color: #006666; /* Matching the transformation section's tone */
+            background-color: #006666; /* 変容セクションのトーンに合わせる */
             color: white;
             border-color: #006666;
         }
         .scroll-button.primary:hover {
             background-color: #004d4d;
         }
+        /* 「人でしかできないこと：先生の存在意義」ボタンのスタイル */
         .scroll-button.secondary {
-            background-color: #4a5568; /* Matching the purpose section's tone */
+            background-color: #4a5568; /* 存在意義セクションのトーンに合わせる */
             color: white;
             border-color: #4a5568;
         }
         .scroll-button.secondary:hover {
             background-color: #2c3e50;
         }
-        /* Close page button style - gentler color */
+        /* 「ページを閉じる」ボタンのスタイル - 優しい配色 */
         .scroll-button.close-page-button {
-            background-color: #fca5a5; /* Light Red/Pink */
-            color: #b91c1c; /* Darker red text */
+            background-color: #fca5a5; /* 薄い赤/ピンク */
+            color: #b91c1c; /* 暗めの赤のテキスト */
             border-color: #fca5a5;
         }
         .scroll-button.close-page-button:hover {
-            background-color: #ef4444; /* More vibrant red on hover */
+            background-color: #ef4444; /* ホバーでより鮮やかな赤 */
             color: white;
             border-color: #ef4444;
         }
 
-
-        /* New styles for "4つの業務プロセス" buttons */
-        .process-category-buttons-container {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            margin-top: 1.5rem;
-            margin-bottom: 1.5rem; /* Space between this group and the next */
-        }
+        /* 「4つの業務プロセス」ボタンのスタイル */
         .process-category-button {
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            padding: 0.6rem 1.2rem;
-            border-radius: 0.5rem; /* Slightly less rounded than main buttons */
-            font-weight: 600; /* Semi-bold */
-            font-size: 0.9rem; /* Slightly smaller font */
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease-in-out;
-            margin: 0.25rem; /* Reduced margin for fixed nav */
-            color: white;
-            border: 1px solid transparent; /* default transparent border */
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            font-weight: 600; /* セミボールド */
+            font-size: 0.9rem; /* 少し小さめのフォント */
+            padding: 0.6rem 1.2rem; /* 少し小さめのパディング */
+            border-radius: 0.5rem; /* 少し丸みを抑える */
         }
-        .process-category-button:hover {
-            transform: translateY(-1px);
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-        }
-        /* Specific colors for process category buttons */
-        .process-category-button.step-1 { background-color: #3498db; border-color: #3498db; } /* Blue for 課題設定 */
+        /* 各業務プロセスボタンの特定の色 */
+        .process-category-button.step-1 { background-color: #3498db; border-color: #3498db; } /* 課題設定の青 */
         .process-category-button.step-1:hover { background-color: #2980b9; border-color: #2980b9; }
-        .process-category-button.step-2 { background-color: #2ecc71; border-color: #2ecc71; } /* Green for 情報収集 */
+        .process-category-button.step-2 { background-color: #2ecc71; border-color: #2ecc71; } /* 情報収集の緑 */
         .process-category-button.step-2:hover { background-color: #27ae60; border-color: #27ae60; }
-        .process-category-button.step-3 { background-color: #9b59b6; border-color: #9b59b6; } /* Purple for 整理分析 */
+        .process-category-button.step-3 { background-color: #9b59b6; border-color: #9b59b6; } /* 整理分析の紫 */
         .process-category-button.step-3:hover { background-color: #8e44ad; border-color: #8e44ad; }
-        .process-category-button.step-4 { background-color: #f39c12; border-color: #f39c12; } /* Orange for まとめ表現 */
+        .process-category-button.step-4 { background-color: #f39c12; border-color: #f39c12; } /* まとめ表現のオレンジ */
         .process-category-button.step-4:hover { background-color: #e67e22; border-color: #e67e22; }
 
         /* アクティブ状態のボタンのスタイル */
@@ -429,20 +404,40 @@
         .process-category-button.step-4.active { box-shadow: 0 0 0 3px rgba(243, 156, 18, 0.5); }
 
 
-        /* Hidden class for sections */
+        /* セクションを非表示にするクラス */
         .hidden {
             display: none;
         }
 
-        /* Specific styles for transformation and purpose sections' background colors */
-        #teacher-transformation { background-color: #e0f2f7; /* Light Blue */ }
-        #teacher-purpose { background-color: #e8f5e9; /* Light Green */ }
+        /* 変容と存在意義セクションの背景色 */
+        #teacher-transformation { background-color: #e0f2f7; /* 薄い青 */ }
+        #teacher-purpose { background-color: #e8f5e9; /* 薄い緑 */ }
 
 
-        /* Responsive adjustments */
+        /* レスポンシブ調整 */
         @media (max-width: 768px) {
             body {
-                padding-bottom: 18rem; /* モバイルでの固定ナビゲーションの高さに合わせて調整 */
+                padding-bottom: 5rem; /* モバイルでの固定ナビゲーションの高さに合わせて調整 */
+            }
+            .process-section {
+                /* モバイルでの水平パディングを増やす */
+                padding-left: 1.5rem;
+                padding-right: 1.5rem;
+            }
+            .fixed-nav-container {
+                flex-wrap: nowrap; /* モバイルでは折り返しなし */
+                overflow-x: auto; /* 水平スクロールを有効にする */
+                justify-content: flex-start; /* アイテムを左揃えにする */
+                padding: 0.5rem 1rem; /* モバイル用のパディングを減らす */
+                gap: 0.25rem; /* 間隔を減らす */
+                width: calc(100% - 2rem); /* 幅を調整 */
+            }
+            .fixed-nav-container .scroll-button,
+            .fixed-nav-container .process-category-button {
+                flex-shrink: 0; /* ボタンが縮まないようにする */
+                font-size: 0.8rem; /* フォントサイズを小さく */
+                padding: 0.5rem 1rem; /* パディングを小さく */
+                margin: 0.125rem; /* マージンを小さく */
             }
             .container {
                 padding: 1.5rem;
@@ -453,7 +448,7 @@
             .sub-title {
                 font-size: 1rem;
             }
-            .presenter-info { /* Adjust alignment for smaller screens if needed */
+            .presenter-info {
                 text-align: center;
             }
             .process-section {
@@ -475,6 +470,7 @@
             }
             .concept-visual {
                 height: 50px;
+                width: 100%; /* モバイルでは幅を100%に */
             }
             .concretization-before .shape {
                 width: 40px;
@@ -485,9 +481,9 @@
                 height: 25px;
             }
             .perspective-after .line {
-                width: 40%; /* Adjust for smaller screens */
+                width: 40%;
                 height: 5px;
-                transform: rotate(var(--angle)) translateX(15px); /* Adjust translateX */
+                transform: rotate(var(--angle)) translateX(15px);
             }
             .structuredness-dot {
                 width: 6px;
@@ -503,33 +499,17 @@
                 height: 25px;
             }
             .explanation-row {
-                flex-direction: column; /* Stack boxes on small screens */
+                flex-direction: column;
                 gap: 0.5rem;
+                width: 100%; /* モバイルでは幅を100%に */
             }
             .explanation-arrow {
-                transform: rotate(90deg); /* Rotate arrow for vertical flow */
+                transform: rotate(90deg);
                 margin: 0.5rem 0;
             }
             .explanation-box {
                 width: 100%;
-                text-align: center; /* Center text when stacked */
-            }
-            .scroll-button {
-                font-size: 0.9rem;
-                padding: 0.6rem 1.2rem;
-                margin: 0.3rem;
-            }
-            .scroll-buttons-container {
-                flex-direction: column;
-            }
-            .process-category-button {
-                font-size: 0.8rem;
-                padding: 0.5rem 1rem;
-                margin: 0.2rem;
-            }
-            .process-category-buttons-container {
-                margin-top: 1rem;
-                margin-bottom: 1rem;
+                text-align: center;
             }
         }
     </style>
@@ -540,45 +520,39 @@
         <p class="sub-title">時間と質を生み出し、教育を豊かにする4つの業務プロセス</p>
         <p class="presenter-info" style="text-align: right;">札幌市立幌西小学校　教諭　中川　宗</p>
 
-        <!-- Fixed Navigation Container -->
+        <!-- 固定ナビゲーションコンテナ -->
         <div class="fixed-nav-container">
-            <!-- "4つの業務プロセス" Navigation Buttons -->
-            <div class="flex flex-wrap justify-center gap-2 mb-2 md:mb-0">
-                <button class="process-category-button step-1" id="btn-process-step-1" onclick="scrollToSection('process-step-1', this)">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
-                    1. 課題設定
-                </button>
-                <button class="process-category-button step-2" id="btn-process-step-2" onclick="scrollToSection('process-step-2', this)">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
-                    2. 情報収集
-                </button>
-                <button class="process-category-button step-3" id="btn-process-step-3" onclick="scrollToSection('process-step-3', this)">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
-                    3. 整理分析
-                </button>
-                <button class="process-category-button step-4" id="btn-process-step-4" onclick="scrollToSection('process-step-4', this)">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
-                    4. まとめ表現
-                </button>
-            </div>
-
-            <!-- Other Navigation Buttons -->
-            <div class="flex flex-wrap justify-center gap-2">
-                <button class="scroll-button primary" id="btn-teacher-transformation" onclick="scrollToSection('teacher-transformation', this)">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
-                    AIがもたらす「ゆとり」の変容
-                </button>
-                <button class="scroll-button secondary" id="btn-teacher-purpose" onclick="scrollToSection('teacher-purpose', this)">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
-                    人でしかできないこと：先生の存在意義
-                </button>
-                <button class="scroll-button close-page-button" onclick="resetToTop()">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                    ページを閉じる
-                </button>
-            </div>
+            <!-- 全てのナビゲーションボタン -->
+            <button class="process-category-button step-1" id="btn-process-step-1" onclick="scrollToSection('process-step-1', this)">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                1. 課題設定
+            </button>
+            <button class="process-category-button step-2" id="btn-process-step-2" onclick="scrollToSection('process-step-2', this)">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.246 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+                2. 情報収集
+            </button>
+            <button class="process-category-button step-3" id="btn-process-step-3" onclick="scrollToSection('process-step-3', this)">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h18M3 14h18m-9-4v8m-7 0h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg>
+                3. 整理分析
+            </button>
+            <button class="process-category-button step-4" id="btn-process-step-4" onclick="scrollToSection('process-step-4', this)">
+                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>
+                4. まとめ表現
+            </button>
+            <button class="scroll-button primary" id="btn-teacher-transformation" onclick="scrollToSection('teacher-transformation', this)">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                AIがもたらす「ゆとり」の変容
+            </button>
+            <button class="scroll-button secondary" id="btn-teacher-purpose" onclick="scrollToSection('teacher-purpose', this)">
+                <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                人でしかできないこと：先生の存在意義
+            </button>
+            <button class="scroll-button close-page-button" onclick="resetToTop()">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                ページを閉じる
+            </button>
         </div>
-        <!-- End Fixed Navigation Container -->
+        <!-- 固定ナビゲーションコンテナここまで -->
 
         <!-- 課題設定 (Problem Setting) -->
         <div class="process-section step-1 hidden" id="process-step-1">
@@ -1126,7 +1100,7 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                 <!-- アプリ1: AIプロンプト作成アシスタント -->
                 <div class="bg-blue-100 p-6 rounded-xl shadow-md flex flex-col items-center text-center">
-                    <h3 class="text-xl font-bold text-blue-800 mb-2">AIプロンプト作成アシスタント</h3>
+                    <h3 class="font-bold text-blue-800 mb-2">AIプロンプト作成アシスタント</h3>
                     <p class="text-sm text-gray-700 mb-4">
                         生成AIへの効果的な「問いかけ方」を簡単に学べます。
                     </p>
@@ -1138,7 +1112,7 @@
 
                 <!-- アプリ2: さっぽろ若手教員応援システム〜デジとらAI〜 -->
                 <div class="bg-green-100 p-6 rounded-xl shadow-md flex flex-col items-center text-center">
-                    <h3 class="text-xl font-bold text-green-800 mb-2">さっぽろ若手教員応援システム〜デジとらAI〜</h3>
+                    <h3 class="font-bold text-green-800 mb-2">さっぽろ若手教員応援システム〜デジとらAI〜</h3>
                     <p class="text-sm text-gray-700 mb-4">
                         札幌市の教育目標や指導要領に沿った授業案を自動生成します。
                     </p>
@@ -1200,7 +1174,7 @@
                     clickedButton.classList.add('active');
                 }
 
-                const offset = 80; // Fixed nav height + some padding
+                const offset = 80; // 固定ナビゲーションの高さ + いくらかのパディング
                 const bodyRect = document.body.getBoundingClientRect().top;
                 const elementRect = targetSection.getBoundingClientRect().top;
                 const elementPosition = elementRect - bodyRect;
@@ -1242,3 +1216,4 @@
     </script>
 </body>
 </html>
+
