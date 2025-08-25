@@ -15,8 +15,8 @@
             min-height: 100vh;
             padding: 2rem;
             box-sizing: border-box;
-            /* 固定ナビゲーションの高さに合わせてpadding-bottomを追加 */
-            padding-bottom: 8rem; /* デスクトップのデフォルト値 */
+            /* 固定ナビゲーションの高さに合わせてpadding-bottomを調整 */
+            padding-bottom: 10rem; /* デスクトップのデフォルト値 (メッセージ含む) */
         }
         .container {
             max-width: 900px; /* コンテンツに合わせて少し広めに */
@@ -315,18 +315,34 @@
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            flex-wrap: wrap; /* デフォルトで折り返しを許可 (モバイルファースト) */
+            flex-direction: column; /* メッセージとボタンを縦に並べる */
+            align-items: center; /* コンテンツを水平中央揃え */
+            flex-wrap: wrap; /* ボタンの折り返しは維持 */
             justify-content: center;
             gap: 0.5rem; /* ボタン間のデフォルト間隔 */
             z-index: 1000;
             /* 背景色を変更 */
             background-color: rgba(226, 232, 240, 0.95); /* 落ち着いたグレー */
-            padding: 1rem 1.5rem; /* デスクトップのデフォルトパディング */
+            padding: 0.5rem 1.5rem 1rem; /* メッセージ用に上部パディングを調整 */
             border-radius: 1rem;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
             width: auto; /* デスクトップでは幅を自動調整 */
             max-width: calc(100% - 4rem); /* コンテナの左右に2remずつパディングを確保 */
         }
+
+        /* 固定ナビゲーションバー内のメッセージスタイル */
+        .fixed-nav-message-inside {
+            font-size: 0.8rem; /* デスクトップで少し小さく */
+            color: #4a5568; /* 落ち着いたグレー */
+            text-align: center;
+            width: 100%; /* 親要素の幅いっぱいに広げる */
+            margin-bottom: 0.75rem; /* ボタンとの間隔 */
+            white-space: nowrap; /* テキストを強制的に1行にする */
+            overflow: hidden;
+            text-overflow: ellipsis; /* はみ出したテキストを省略記号にする */
+            padding: 0 0.5rem; /* 左右に少しパディング */
+        }
+
 
         /* 全てのスクロールボタンの共通スタイル */
         .scroll-button, .process-category-button {
@@ -464,7 +480,7 @@
         /* レスポンシブ調整 */
         @media (max-width: 768px) {
             body {
-                padding-bottom: 5rem; /* モバイルでの固定ナビゲーションの高さに合わせて調整 */
+                padding-bottom: 6rem; /* モバイルでの固定ナビゲーションの高さに合わせて調整 */
             }
             .process-section {
                 /* モバイルでの水平パディングを増やす */
@@ -475,9 +491,14 @@
                 flex-wrap: nowrap; /* モバイルでは折り返しなし */
                 overflow-x: auto; /* 水平スクロールを有効にする */
                 justify-content: flex-start; /* アイテムを左揃えにする */
-                padding: 0.5rem 1rem; /* モバイル用のパディングを減らす */
+                padding: 0.5rem 1rem 1rem; /* モバイル用のパディングを調整 */
                 gap: 0.25rem; /* 間隔を減らす */
                 width: calc(100% - 2rem); /* 幅を調整 */
+            }
+            .fixed-nav-message-inside {
+                font-size: 0.65rem; /* スマホでさらに小さく */
+                margin-bottom: 0.5rem; /* ボタンとの間隔 */
+                padding: 0 0.25rem; /* 左右に少しパディング */
             }
             .fixed-nav-container .scroll-button,
             .fixed-nav-container .process-category-button {
@@ -575,11 +596,15 @@
 <body>
     <div class="container">
         <h1 class="main-title">AI×ゆとり研究</h1>
-        <!-- 副題を削除 -->
         <p class="presenter-info" style="text-align: right;">札幌市立幌西小学校　教諭　中川　宗</p>
 
         <!-- 固定ナビゲーションコンテナ -->
         <div class="fixed-nav-container">
+            <!-- ★ここが追加されたメッセージです★ -->
+            <div class="fixed-nav-message-inside">
+                AIが先生の「ゆとり」をどう生み出し、その「ゆとり」を教育の本質に注ぎ込むかを提案しています。
+            </div>
+
             <!-- 統合された「4つの業務プロセスの変容」ボタン -->
             <button class="process-category-button" id="btn-all-process-steps" onclick="scrollToSection('all-process-steps', this)">
                 <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
@@ -834,6 +859,7 @@
                     <div class="visual-item">
                         <div class="visual-label">After</div>
                         <div class="concept-visual structuredness-visual structuredness-after">
+                            <div class="structuredness-dot"></div>
                             <div class="structuredness-dot"></div>
                             <div class="structuredness-dot"></div>
                             <div class="structuredness-dot"></div>
@@ -1102,7 +1128,6 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <!-- 1. 子どもと深く向き合う「心の教育」 -->
                 <div class="infographic-card bg-red-50 p-6 rounded-xl shadow-md flex items-start space-x-4">
-                    <!-- 絵文字を削除 -->
                     <div>
                         <h3 class="font-bold text-lg text-red-800 mb-2">子どもと深く向き合う「心の教育」</h3>
                         <p class="text-sm text-gray-700">
@@ -1113,7 +1138,6 @@
 
                 <!-- 2. 創造性を刺激する「問い」と「学びの場」のデザイン -->
                 <div class="infographic-card bg-yellow-50 p-6 rounded-xl shadow-md flex items-start space-x-4">
-                    <!-- 絵文字を削除 -->
                     <div>
                         <h3 class="font-bold text-lg text-yellow-800 mb-2">創造性を刺激する「問い」と「学びの場」のデザイン</h3>
                         <p class="text-sm text-gray-700">
@@ -1124,7 +1148,6 @@
 
                 <!-- 3. 育成のための「あえての選択」と深い教育的判断 -->
                 <div class="infographic-card bg-purple-50 p-6 rounded-xl shadow-md flex items-start space-x-4">
-                    <!-- 絵文字を削除 -->
                     <div>
                         <h3 class="font-bold text-lg text-purple-800 mb-2">育成のための「あえての選択」と深い教育的判断</h3>
                         <p class="text-sm text-gray-700">
@@ -1135,7 +1158,6 @@
 
                 <!-- 4. 未来を生き抜く「非認知能力」の育成 -->
                 <div class="infographic-card bg-blue-50 p-6 rounded-xl shadow-md flex items-start space-x-4">
-                    <!-- 絵文字を削除 -->
                     <div>
                         <h3 class="font-bold text-lg text-blue-800 mb-2">未来を生き抜く「非認知能力」の育成</h3>
                         <p class="text-sm text-gray-700">
