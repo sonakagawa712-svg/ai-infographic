@@ -315,7 +315,7 @@
             left: 50%;
             transform: translateX(-50%);
             display: flex;
-            flex-direction: column; /* メッセージとボタンを縦に並べる */
+            flex-direction: column; /* メッセージとボタン群を縦に並べる */
             align-items: center; /* コンテンツを水平中央揃え */
             flex-wrap: wrap; /* ボタンの折り返しは維持 */
             justify-content: center;
@@ -337,7 +337,7 @@
             text-align: center;
             width: 100%; /* 親要素の幅いっぱいに広げる */
             margin-bottom: 0.75rem; /* ボタンとの間隔 */
-            white-space: nowrap; /* テキストを強制的に1行にする */
+            white-space: nowrap; /* デスクトップでは1行に保つ */
             overflow: hidden;
             text-overflow: ellipsis; /* はみ出したテキストを省略記号にする */
             padding: 0 0.5rem; /* 左右に少しパディング */
@@ -496,7 +496,7 @@
         /* レスポンシブ調整 */
         @media (max-width: 768px) {
             body {
-                padding-bottom: 6rem; /* モバイルでの固定ナビゲーションの高さに合わせて調整 */
+                padding-bottom: 7.5rem; /* モバイルでの固定ナビゲーションの高さに合わせて調整 (メッセージ2行分) */
             }
             .process-section {
                 /* モバイルでの水平パディングを増やす */
@@ -504,7 +504,7 @@
                 padding-right: 1.5rem;
             }
             .fixed-nav-container {
-                flex-wrap: wrap; /* モバイルでは折り返しを許可 (メッセージとボタン群) */
+                flex-wrap: wrap; /* メッセージとボタン群を縦に並べるが、ボタン群自体は横並び */
                 overflow-x: hidden; /* 全体の横スクロールは不要 */
                 justify-content: center; /* 中央揃え */
                 padding: 0.5rem 1rem 1rem; /* モバイル用のパディングを調整 */
@@ -515,6 +515,11 @@
                 font-size: 0.65rem; /* スマホでさらに小さく */
                 margin-bottom: 0.5rem; /* ボタンとの間隔 */
                 padding: 0 0.25rem; /* 左右に少しパディング */
+                white-space: normal; /* ★ここを変更：テキストを折り返す */
+                overflow: visible; /* ★ここを変更：オーバーフローを可視に */
+                text-overflow: clip; /* ★ここを変更：省略記号を削除 */
+                line-height: 1.3; /* 行間を調整して読みやすくする */
+                max-height: 2.6rem; /* 2行分の高さを目安に設定 */
             }
             .scroll-button-group { /* モバイルでボタン群を横スクロールさせる */
                 flex-wrap: nowrap; /* ボタンが折り返さないようにする */
