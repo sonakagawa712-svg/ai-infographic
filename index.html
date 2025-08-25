@@ -510,7 +510,7 @@
         /* レスポンシブ調整 */
         @media (max-width: 768px) {
             body {
-                padding-bottom: 7.5rem; /* モバイルでの固定ナビゲーションの高さに合わせて調整 (メッセージ2行分) */
+                padding-bottom: 8.5rem; /* モバイルでの固定ナビゲーションの高さに合わせて調整 (メッセージ2行分) */
             }
             .process-section {
                 /* モバイルでの水平パディングを増やす */
@@ -544,9 +544,16 @@
             .fixed-nav-container .process-category-button,
             .fixed-nav-container .audio-button { /* audio-buttonもモバイルスタイルに含める */
                 flex-shrink: 0; /* ボタンが縮まないようにする */
-                font-size: 0.8rem; /* フォントサイズを小さく */
-                padding: 0.5rem 1rem; /* パディングを小さく */
+                font-size: 0.75rem; /* フォントサイズを小さく */
+                padding: 0.4rem 0.6rem; /* 左右のパディングをさらに減らす */
                 margin: 0.125rem; /* マージンを小さく */
+                white-space: normal; /* テキストを折り返す */
+                line-height: 1.2; /* 行間を調整 */
+                min-height: 3rem; /* 2行に収まるように最小高さを設定 */
+                display: flex; /* flexboxを適用してテキストを中央揃え */
+                align-items: center;
+                justify-content: center;
+                text-align: center; /* テキストを中央揃え */
             }
             .container {
                 padding: 1.5rem;
@@ -643,7 +650,7 @@
         <div class="fixed-nav-container">
             <!-- メッセージ -->
             <div class="fixed-nav-message-inside">
-                AIが先生の「ゆとり」をどう生み出し、その「ゆとり」を教育の本質に注ぎ込むかを提案しています。
+                AIが先生の「ゆとり」をどう生み出し、その「ゆとり」を教育の本質に注ぎ込むかを提案しています。詳細は各ボタンをタップ！
             </div>
 
             <!-- ボタン群をまとめる新しいdivを追加 -->
@@ -664,7 +671,7 @@
                 <!-- ★ここから音声再生ボタンを追加します★ -->
                 <button class="audio-button" id="btn-play-audio" onclick="toggleAudio(this)">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v14M9 19a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2H9a2 2 0 00-2 2v14a2 2 0 002 2zm0 0l-3 3v-3"></path></svg>
-                    音声で説明
+                    AIラジオ：研究解説を聴く
                 </button>
                 <!-- ★音声再生ボタンの追加ここまで★ -->
                 <button class="scroll-button close-page-button" onclick="resetToTop()">
@@ -1356,7 +1363,7 @@
                 });
             }
             // セクション移動時は音声を停止
-            stopAudio();
+            // stopAudio(); // ★この行をコメントアウトまたは削除しました★
         }
 
         // トップ画面に戻る（すべてのセクションを非表示にする）関数
