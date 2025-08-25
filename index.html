@@ -360,7 +360,7 @@
             display: none;
         }
 
-        .scroll-button, .process-category-button {
+        .scroll-button, .process-category-button, .audio-button { /* audio-buttonも共通スタイルに含める */
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -377,7 +377,7 @@
             white-space: nowrap; /* ボタン内のテキストが改行されないようにする */
             flex-shrink: 0; /* ボタンが縮まないようにする */
         }
-        .scroll-button:hover, .process-category-button:hover {
+        .scroll-button:hover, .process-category-button:hover, .audio-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
         }
@@ -440,7 +440,7 @@
         .process-category-button.step-4:hover { background-color: #e67e22; border-color: #e67e22; }
 
         /* アクティブ状態のボタンのスタイル */
-        .scroll-button.active, .process-category-button.active {
+        .scroll-button.active, .process-category-button.active, .audio-button.active {
             filter: brightness(1.1); /* 少し明るくする */
             box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5); /* 青色の光るボーダー */
             transform: translateY(-2px);
@@ -448,6 +448,20 @@
         .process-category-button#btn-all-process-steps.active { box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.5); } /* 統合ボタンのアクティブ状態 (グラデーションの開始色に合わせる) */
         .scroll-button.primary.active { box-shadow: 0 0 0 3px rgba(177, 156, 217, 0.5); } /* AIがもたらす「ゆとり」の変容ボタンのアクティブ状態 */
         .scroll-button.secondary.active { box-shadow: 0 0 0 3px rgba(154, 205, 50, 0.5); } /* 人でしかできないこと：先生の存在意義ボタンのアクティブ状態 */
+
+        /* 音声再生ボタンのスタイル */
+        .audio-button {
+            background: linear-gradient(135deg, #FF6F61 0%, #FFD700 100%); /* 暖かみのあるオレンジから黄色のグラデーション */
+            color: white;
+            border-color: #FF6F61;
+        }
+        .audio-button:hover {
+            background: linear-gradient(135deg, #E04D3F 0%, #FFC107 100%);
+            border-color: #E04D3F;
+        }
+        .audio-button.active {
+            box-shadow: 0 0 0 3px rgba(255, 111, 97, 0.5); /* アクティブ時の影 */
+        }
 
 
         /* セクションを非表示にするクラス */
@@ -527,7 +541,8 @@
                 justify-content: flex-start; /* 左揃え */
             }
             .fixed-nav-container .scroll-button,
-            .fixed-nav-container .process-category-button {
+            .fixed-nav-container .process-category-button,
+            .fixed-nav-container .audio-button { /* audio-buttonもモバイルスタイルに含める */
                 flex-shrink: 0; /* ボタンが縮まないようにする */
                 font-size: 0.8rem; /* フォントサイズを小さく */
                 padding: 0.5rem 1rem; /* パディングを小さく */
@@ -646,6 +661,12 @@
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
                     人でしかできないこと：先生の存在意義
                 </button>
+                <!-- ★ここから音声再生ボタンを追加します★ -->
+                <button class="audio-button" id="btn-play-audio" onclick="toggleAudio(this)">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v14M9 19a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2H9a2 2 0 00-2 2v14a2 2 0 002 2zm0 0l-3 3v-3"></path></svg>
+                    音声で説明
+                </button>
+                <!-- ★音声再生ボタンの追加ここまで★ -->
                 <button class="scroll-button close-page-button" onclick="resetToTop()">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     ページを閉じる
@@ -911,7 +932,8 @@
                     </div>
                     <div class="explanation-box">
                         <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"/></svg>
-                        After: AIが非構造化データ（例：児童の自由記述）を自動で分析し、体系的に分類・整理する</div>
+                        After: AIが非構造化データ（例：児童の自由記述）を自動で分析し、体系的に分類・整理する
+                    </div>
                 </div>
 
                 <div class="section-title">洞察力（データから隠れた意味を見つけたいとき）</div>
@@ -932,14 +954,15 @@
                 <div class="explanation-row">
                     <div class="explanation-box">
                         <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" y1="16" x2="12" y2="12"/><line x1="12" y1="8" x2="12" y2="8"/></svg>
-                        Before: 多くのデータがあっても、その裏にある深い意味や傾向を見抜くのは難しい</div>
+                        Before: 多くのデータがあっても、その裏にある深い意味や傾向を見抜くのは難しい
+                    </div>
                     <div class="explanation-arrow">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
                         </svg>
                     </div>
                     <div class="explanation-box">
-                        <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9M12 15h9M12 10h9M12 5h9M3 20l3-3 6-6 3 3 6-6"/></svg>
+                        <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
                         After: AIが大量のデータから、人間が見過ごしがちな隠れたパターンや傾向を抽出し、新たな発見をもたらす
                     </div>
                 </div>
@@ -962,7 +985,8 @@
                 <div class="explanation-row">
                     <div class="explanation-box">
                         <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
-                        Before: 整理分析に時間がかかり、情報が古くなる</div>
+                        Before: 整理分析に時間がかかり、情報が古くなる
+                    </div>
                     <div class="explanation-arrow">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
@@ -970,7 +994,8 @@
                     </div>
                     <div class="explanation-box">
                         <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><polyline points="13 2 13 9 20 9"/><path d="M22 12h-4V8h4V12z"/></svg>
-                        After: AIがリアルタイムに近い速度で情報を処理・分析する</div>
+                        After: AIがリアルタイムに近い速度で情報を処理・分析する
+                    </div>
                 </div>
             </div>
 
@@ -994,8 +1019,9 @@
                 </div>
                 <div class="explanation-row">
                     <div class="explanation-box">
-                        <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><polyline points="13 2 13 9 20 9"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
-                        Before: 文書の作成や要点抽出に多くの時間を要する</div>
+                        <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
+                        Before: 文書の作成や要点抽出に多くの時間を要する
+                    </div>
                     <div class="explanation-arrow">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
@@ -1027,7 +1053,8 @@
                 <div class="explanation-row">
                     <div class="explanation-box">
                         <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/></svg>
-                        Before: 表現方法が単調になりがちで、資料の見た目を工夫するのに手間がかかる</div>
+                        Before: 表現方法が単調になりがちで、資料の見た目を工夫するのに手間がかかる
+                    </div>
                     <div class="explanation-arrow">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
@@ -1057,7 +1084,8 @@
                 <div class="explanation-row">
                     <div class="explanation-box">
                         <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-                        Before: 伝えたいメッセージが相手に響くよう、表現を工夫するのに悩む</div>
+                        Before: 伝えたいメッセージが相手に響くよう、表現を工夫するのに悩む
+                    </div>
                     <div class="explanation-arrow">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M17.25 8.25L21 12m0 0l-3.75 3.75M21 12H3" />
@@ -1178,7 +1206,7 @@
                 <!-- 3. 育成のための「あえての選択」と深い教育的判断 -->
                 <div class="infographic-card bg-purple-50 p-6 rounded-xl shadow-md flex items-start space-x-4">
                     <div>
-                        <h3 class="font-bold text-lg text-purple-800 mb-2">育成のための「あえての選択」と深い教育的判断</h3>
+                        <p class="font-bold text-lg text-purple-800 mb-2">育成のための「あえての選択」と深い教育的判断</p>
                         <p class="text-sm text-gray-700">
                             「あえて失敗させる」ことで、子どもが自ら考え、工夫し、乗り越える力を育みます。AIの最適解の先を行く、経験に裏打ちされた深い洞察を若手教員に伝え、共に最善の育成方法を考える時間を創出します。
                         </p>
@@ -1237,6 +1265,11 @@
     </div>
 
     <script>
+        // 音声ファイルのURL (NotebookLMで作成した音声データのURLに置き換えてください)
+        const AUDIO_URL = 'http://googleusercontent.com/file_content/1'; // ★ここにあなたの音声ファイルのURLを貼り付けてください★
+        let audioPlayer = new Audio(AUDIO_URL);
+        let isPlaying = false;
+
         // すべてのセクションIDを配列にまとめる
         const allSectionIds = [
             'all-process-steps', // 新しく追加した統合セクション
@@ -1252,7 +1285,8 @@
         const allButtonIds = [
             'btn-all-process-steps', // 新しく追加した統合ボタン
             'btn-teacher-transformation',
-            'btn-teacher-purpose'
+            'btn-teacher-purpose',
+            'btn-play-audio' // 音声ボタンも追加
         ];
 
         // セクションを表示し、他のセクションを非表示にする関数
@@ -1319,6 +1353,8 @@
                     behavior: 'smooth'
                 });
             }
+            // セクション移動時は音声を停止
+            stopAudio();
         }
 
         // トップ画面に戻る（すべてのセクションを非表示にする）関数
@@ -1361,7 +1397,44 @@
                 top: 0,
                 behavior: 'smooth'
             });
+            // トップに戻る時も音声を停止
+            stopAudio();
         }
+
+        // 音声再生/停止を切り替える関数
+        function toggleAudio(button) {
+            if (isPlaying) {
+                stopAudio();
+            } else {
+                playAudio(button);
+            }
+        }
+
+        // 音声を再生する関数
+        function playAudio(button) {
+            audioPlayer.play();
+            isPlaying = true;
+            button.classList.add('active');
+            // 音声再生中は他のセクションボタンのアクティブ状態を解除
+            allButtonIds.forEach(buttonId => {
+                if (buttonId !== 'btn-play-audio') {
+                    document.getElementById(buttonId)?.classList.remove('active');
+                }
+            });
+        }
+
+        // 音声を停止する関数
+        function stopAudio() {
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0; // 再生位置を最初に戻す
+            isPlaying = false;
+            document.getElementById('btn-play-audio')?.classList.remove('active');
+        }
+
+        // 音声が終了したときにボタンのアクティブ状態を解除
+        audioPlayer.addEventListener('ended', () => {
+            stopAudio();
+        });
 
         // ページロード時にすべてのセクションを非表示にする
         document.addEventListener('DOMContentLoaded', () => {
@@ -1370,3 +1443,4 @@
     </script>
 </body>
 </html>
+
