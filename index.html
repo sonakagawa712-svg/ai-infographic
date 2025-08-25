@@ -345,6 +345,21 @@
 
 
         /* 全てのスクロールボタンの共通スタイル */
+        .scroll-button-group { /* ボタンを横並びにするための新しいグループ */
+            display: flex;
+            flex-wrap: nowrap; /* ボタンが折り返さないようにする */
+            overflow-x: auto; /* 横スクロールを有効にする */
+            justify-content: center; /* 中央揃え */
+            gap: 0.5rem; /* ボタン間の間隔 */
+            width: 100%; /* 親要素の幅いっぱいに広げる */
+            padding-bottom: 0.5rem; /* スクロールバーのためのスペース */
+            -webkit-overflow-scrolling: touch; /* iOSでのスムーズなスクロール */
+            scrollbar-width: none; /* Firefoxでスクロールバーを非表示にする */
+        }
+        .scroll-button-group::-webkit-scrollbar { /* Chrome/Safariでスクロールバーを非表示にする */
+            display: none;
+        }
+
         .scroll-button, .process-category-button {
             display: inline-flex;
             align-items: center;
@@ -360,6 +375,7 @@
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
             border: 2px solid transparent; /* デフォルトは透明なボーダー */
             white-space: nowrap; /* ボタン内のテキストが改行されないようにする */
+            flex-shrink: 0; /* ボタンが縮まないようにする */
         }
         .scroll-button:hover, .process-category-button:hover {
             transform: translateY(-2px);
@@ -488,9 +504,9 @@
                 padding-right: 1.5rem;
             }
             .fixed-nav-container {
-                flex-wrap: nowrap; /* モバイルでは折り返しなし */
-                overflow-x: auto; /* 水平スクロールを有効にする */
-                justify-content: flex-start; /* アイテムを左揃えにする */
+                flex-wrap: wrap; /* モバイルでは折り返しを許可 (メッセージとボタン群) */
+                overflow-x: hidden; /* 全体の横スクロールは不要 */
+                justify-content: center; /* 中央揃え */
                 padding: 0.5rem 1rem 1rem; /* モバイル用のパディングを調整 */
                 gap: 0.25rem; /* 間隔を減らす */
                 width: calc(100% - 2rem); /* 幅を調整 */
@@ -499,6 +515,11 @@
                 font-size: 0.65rem; /* スマホでさらに小さく */
                 margin-bottom: 0.5rem; /* ボタンとの間隔 */
                 padding: 0 0.25rem; /* 左右に少しパディング */
+            }
+            .scroll-button-group { /* モバイルでボタン群を横スクロールさせる */
+                flex-wrap: nowrap; /* ボタンが折り返さないようにする */
+                overflow-x: auto; /* 横スクロールを有効にする */
+                justify-content: flex-start; /* 左揃え */
             }
             .fixed-nav-container .scroll-button,
             .fixed-nav-container .process-category-button {
@@ -600,28 +621,31 @@
 
         <!-- 固定ナビゲーションコンテナ -->
         <div class="fixed-nav-container">
-            <!-- ★ここが追加されたメッセージです★ -->
+            <!-- メッセージ -->
             <div class="fixed-nav-message-inside">
                 AIが先生の「ゆとり」をどう生み出し、その「ゆとり」を教育の本質に注ぎ込むかを提案しています。
             </div>
 
-            <!-- 統合された「4つの業務プロセスの変容」ボタン -->
-            <button class="process-category-button" id="btn-all-process-steps" onclick="scrollToSection('all-process-steps', this)">
-                <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                4つの業務プロセスの変容
-            </button>
-            <button class="scroll-button primary" id="btn-teacher-transformation" onclick="scrollToSection('teacher-transformation', this)">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
-                AIがもたらす「ゆとり」の変容
-            </button>
-            <button class="scroll-button secondary" id="btn-teacher-purpose" onclick="scrollToSection('teacher-purpose', this)">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
-                人でしかできないこと：先生の存在意義
-            </button>
-            <button class="scroll-button close-page-button" onclick="resetToTop()">
-                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
-                ページを閉じる
-            </button>
+            <!-- ボタン群をまとめる新しいdivを追加 -->
+            <div class="scroll-button-group">
+                <!-- 統合された「4つの業務プロセスの変容」ボタン -->
+                <button class="process-category-button" id="btn-all-process-steps" onclick="scrollToSection('all-process-steps', this)">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
+                    4つの業務プロセスの変容
+                </button>
+                <button class="scroll-button primary" id="btn-teacher-transformation" onclick="scrollToSection('teacher-transformation', this)">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"></path></svg>
+                    AIがもたらす「ゆとり」の変容
+                </button>
+                <button class="scroll-button secondary" id="btn-teacher-purpose" onclick="scrollToSection('teacher-purpose', this)">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                    人でしかできないこと：先生の存在意義
+                </button>
+                <button class="scroll-button close-page-button" onclick="resetToTop()">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                    ページを閉じる
+                </button>
+            </div>
         </div>
         <!-- 固定ナビゲーションコンテナここまで -->
 
