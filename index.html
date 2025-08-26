@@ -525,6 +525,42 @@
             body {
                 padding-bottom: 12rem; /* モバイルでの固定ナビゲーションの高さに合わせて調整 (メッセージ2行分 + 再生バー) */
             }
+            .container {
+                padding: 1.5rem; /* モバイルでコンテナ全体のパディングを調整 */
+            }
+            /* タイトルと発表者名の調整 */
+            .main-title {
+                font-size: 1.75rem; /* スマホでタイトルを小さく */
+                line-height: 1.3; /* 行の高さを調整 */
+                white-space: normal; /* 折り返しを許可 */
+            }
+            .presenter-info {
+                font-size: 0.9rem; /* スマホで発表者情報を小さく */
+                line-height: 1.3;
+                white-space: normal; /* 折り返しを許可 */
+                text-align: center; /* 中央寄せ */
+                margin-bottom: 1.5rem; /* 他のコンテンツとの間隔を調整 */
+            }
+
+            .process-section {
+                padding: 1rem 1.25rem; /* モバイルで各セクション内部のパディングを調整 */
+            }
+            /* explanation-row のモバイル調整 */
+            .explanation-row {
+                flex-direction: column; /* モバイルでは縦並びに */
+                gap: 0.75rem;
+                width: 100%; /* 全幅を使う */
+            }
+            .explanation-box {
+                text-align: center; /* ボックス内のテキストを中央揃え */
+                min-height: auto; /* 高さの制約を解除 */
+            }
+            .explanation-arrow {
+                transform: rotate(90deg); /* 矢印を縦向きに */
+                width: 20px;
+                height: 20px;
+            }
+
             .fixed-nav-container {
                 padding: 0.5rem 1rem 0.5rem; /* モバイル用のパディングを調整 */
                 width: calc(100% - 2rem); /* 幅を調整 */
@@ -586,6 +622,14 @@
             }
             .audio-progress-slider {
                 width: 100%;
+            }
+
+            /* 結論メッセージのモバイル調整 */
+            .conclusion-message {
+                padding: 1.5rem; /* モバイルで結論メッセージのパディングを調整 */
+            }
+            .conclusion-message p {
+                font-size: 1.2rem; /* モバイルでフォントサイズを調整 */
             }
         }
 
