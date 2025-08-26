@@ -16,7 +16,7 @@
             padding: 2rem;
             box-sizing: border-box;
             /* 固定ナビゲーションの高さに合わせてpadding-bottomを調整 */
-            padding-bottom: 10rem; /* デスクトップのデフォルト値 (メッセージ含む) */
+            padding-bottom: 15rem; /* デスクトップのデフォルト値 (メッセージ、ボタン、再生バー含む) */
         }
         .container {
             max-width: 900px; /* コンテンツに合わせて少し広めに */
@@ -486,14 +486,27 @@
             justify-content: center;
             gap: 1rem;
             margin-top: 3rem; /* 上部のマージンを増やす */
+            position: relative; /* 擬似要素のために必要 */
+            overflow: hidden; /* 擬似要素がはみ出さないように */
         }
-        .conclusion-message .icon {
-            width: 3.5rem; /* アイコンを大きく */
-            height: 3.5rem;
-            color: white;
-            stroke-width: 2;
+        /* 微細な光沢感を追加する擬似要素 */
+        .conclusion-message::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 150%; /* 要素より大きくして全体をカバー */
+            height: 150%;
+            background: radial-gradient(circle at center, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 70%);
+            transform: translate(-50%, -50%);
+            opacity: 0.7; /* 控えめな光沢感 */
+            z-index: 1; /* 背景とテキストの間に配置 */
+            pointer-events: none; /* クリックイベントが要素を通過するようにする */
+            border-radius: 1.5rem; /* 親要素の角丸に合わせる */
         }
         .conclusion-message p {
+            position: relative; /* テキストを光沢の上に表示するために必要 */
+            z-index: 2;
             font-size: 1.8rem; /* フォントサイズを大きく */
             line-height: 1.4;
             font-weight: bold;
@@ -510,28 +523,19 @@
         /* レスポンシブ調整 */
         @media (max-width: 768px) {
             body {
-                padding-bottom: 8.5rem; /* モバイルでの固定ナビゲーションの高さに合わせて調整 (メッセージ2行分) */
-            }
-            .process-section {
-                /* モバイルでの水平パディングを増やす */
-                padding-left: 1.5rem;
-                padding-right: 1.5rem;
+                padding-bottom: 12rem; /* モバイルでの固定ナビゲーションの高さに合わせて調整 (メッセージ2行分 + 再生バー) */
             }
             .fixed-nav-container {
-                flex-wrap: wrap; /* メッセージとボタン群を縦に並べるが、ボタン群自体は横並び */
-                overflow-x: hidden; /* 全体の横スクロールは不要 */
-                justify-content: center; /* 中央揃え */
-                padding: 0.5rem 1rem 1rem; /* モバイル用のパディングを調整 */
-                gap: 0.25rem; /* 間隔を減らす */
+                padding: 0.5rem 1rem 0.5rem; /* モバイル用のパディングを調整 */
                 width: calc(100% - 2rem); /* 幅を調整 */
             }
             .fixed-nav-message-inside {
                 font-size: 0.65rem; /* スマホでさらに小さく */
                 margin-bottom: 0.5rem; /* ボタンとの間隔 */
                 padding: 0 0.25rem; /* 左右に少しパディング */
-                white-space: normal; /* ★ここを変更：テキストを折り返す */
-                overflow: visible; /* ★ここを変更：オーバーフローを可視に */
-                text-overflow: clip; /* ★ここを変更：省略記号を削除 */
+                white-space: normal; /* テキストを折り返す */
+                overflow: visible; /* オーバーフローを可視に */
+                text-overflow: clip; /* 省略記号を削除 */
                 line-height: 1.3; /* 行間を調整して読みやすくする */
                 max-height: 2.6rem; /* 2行分の高さを目安に設定 */
             }
@@ -539,6 +543,7 @@
                 flex-wrap: nowrap; /* ボタンが折り返さないようにする */
                 overflow-x: auto; /* 横スクロールを有効にする */
                 justify-content: flex-start; /* 左揃え */
+                padding-bottom: 0.5rem; /* スクロールバーのためのスペース */
             }
             .fixed-nav-container .scroll-button,
             .fixed-nav-container .process-category-button,
@@ -555,89 +560,145 @@
                 justify-content: center;
                 text-align: center; /* テキストを中央揃え */
             }
-            .container {
-                padding: 1.5rem;
-            }
-            .main-title {
-                font-size: 2rem;
-            }
-            .sub-title {
-                font-size: 1rem;
-            }
-            .presenter-info {
-                text-align: center;
-            }
-            .process-section {
-                margin-bottom: 2.5rem;
-            }
-            .process-section:not(:last-child) {
-                margin-bottom: 2.5rem;
-            }
-            .section-title {
-                font-size: 1.1rem;
-                margin-bottom: 1rem;
-            }
-            .visual-label {
-                font-size: 0.9rem;
-            }
-            .concept-visual-group {
-                margin-top: 1.5rem;
-                margin-bottom: 1.5rem;
-            }
-            .concept-visual {
-                height: 50px;
-                width: 100%; /* モバイルでは幅を100%に */
-            }
-            .concretization-before .shape {
-                width: 40px;
-                height: 30px;
-            }
-            .concretization-after .shape {
-                width: 25px;
-                height: 25px;
-            }
-            .perspective-after .line {
-                width: 40%;
-                height: 5px;
-                transform: rotate(var(--angle)) translateX(15px);
-            }
-            .structuredness-dot {
-                width: 6px;
-                height: 6px;
-            }
-            .structuredness-after {
-                grid-template-columns: repeat(3, 1fr);
-                grid-template-rows: repeat(2, 1fr);
-                padding: 5px;
-            }
-            .diversity-after .shape {
-                width: 25px;
-                height: 25px;
-            }
-            .explanation-row {
-                flex-direction: column;
+            /* AIラジオ再生バーのモバイル調整 */
+            .audio-player-controls {
+                flex-direction: column; /* モバイルでは縦並び */
                 gap: 0.5rem;
-                width: 100%; /* モバイルでは幅を100%に */
+                padding: 0.5rem;
+                max-width: 100%;
             }
-            .explanation-arrow {
-                transform: rotate(90deg);
-                margin: 0.5rem 0;
-            }
-            .explanation-box {
+            .audio-progress-bar-container {
                 width: 100%;
-                text-align: center;
+                margin-bottom: 0.25rem;
             }
-            .conclusion-message {
-                padding: 1.5rem;
-                gap: 0.75rem;
+            .audio-time {
+                order: -1; /* 再生時間を上に配置 */
+                margin-bottom: 0.25rem;
             }
-            .conclusion-message .icon {
-                width: 2.5rem;
-                height: 2.5rem;
+            .audio-buttons {
+                width: 100%;
+                justify-content: center;
             }
-            .conclusion-message p {
-                font-size: 1.4rem;
+            .audio-buttons button {
+                padding: 0.3rem 0.6rem;
+                font-size: 0.7rem;
+                margin: 0 0.1rem;
             }
+            .audio-progress-slider {
+                width: 100%;
+            }
+        }
+
+        /* スクロール進捗バーのスタイル */
+        .scroll-progress-container {
+            width: 100%;
+            height: 4px; /* バーの高さ */
+            background-color: rgba(0, 0, 0, 0.1);
+            border-radius: 2px;
+            margin-top: 0.5rem; /* ボタン群との間隔 */
+            position: relative;
+            overflow: hidden; /* プログレスバーがはみ出さないように */
+        }
+        .scroll-progress-bar {
+            height: 100%;
+            width: 0%; /* 初期値 */
+            background-color: #3498db; /* プログレスバーの色 */
+            border-radius: 2px;
+            transition: width 0.1s linear; /* スムーズな動き */
+        }
+
+        /* AIラジオ再生バーのスタイル */
+        .audio-player-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            max-width: 80%; /* デスクトップでの最大幅 */
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 0.75rem;
+            padding: 0.75rem 1rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+            margin-top: 0.5rem; /* ボタン群との間隔 */
+            gap: 0.5rem;
+            flex-wrap: nowrap; /* 要素が折り返さないように */
+        }
+        .audio-progress-bar-container {
+            flex-grow: 1;
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            position: relative;
+            cursor: pointer;
+        }
+        .audio-progress-bar {
+            height: 100%;
+            width: 0%;
+            background-color: #3498db;
+            border-radius: 4px;
+            transition: width 0.1s linear;
+        }
+        .audio-progress-slider {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            -webkit-appearance: none;
+            appearance: none;
+            background: transparent;
+            cursor: pointer;
+            outline: none;
+            margin: 0;
+            padding: 0;
+        }
+        .audio-progress-slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 16px;
+            height: 16px;
+            background-color: #2c3e50;
+            border-radius: 50%;
+            cursor: pointer;
+            margin-top: -4px; /* スライダーのつまみを中央に配置 */
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .audio-progress-slider::-moz-range-thumb {
+            width: 16px;
+            height: 16px;
+            background-color: #2c3e50;
+            border-radius: 50%;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+        }
+        .audio-time {
+            font-size: 0.8rem;
+            color: #555;
+            white-space: nowrap;
+        }
+        .audio-buttons {
+            display: flex;
+            gap: 0.25rem;
+        }
+        .audio-buttons button {
+            background-color: #34495e;
+            color: white;
+            padding: 0.3rem 0.5rem;
+            border-radius: 0.5rem;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .audio-buttons button:hover {
+            background-color: #2c3e50;
+        }
+        .audio-buttons button svg {
+            width: 1rem;
+            height: 1rem;
+        }
+
+        /* AIラジオボタンのアクティブ時スタイルを調整 */
+        .audio-button.active {
+            box-shadow: 0 0 0 3px rgba(255, 111, 97, 0.5); /* アクティブ時の影 */
         }
     </style>
 </head>
@@ -653,8 +714,8 @@
                 AIが先生の「ゆとり」をどう生み出し、その「ゆとり」を教育の本質に注ぎ込むかを提案しています。詳細は各ボタンをタップ！
             </div>
 
-            <!-- ボタン群をまとめる新しいdivを追加 -->
-            <div class="scroll-button-group">
+            <!-- ボタン群をまとめるdiv -->
+            <div class="scroll-button-group" id="scroll-button-group">
                 <!-- 統合された「4つの業務プロセスの変容」ボタン -->
                 <button class="process-category-button" id="btn-all-process-steps" onclick="scrollToSection('all-process-steps', this)">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
@@ -668,16 +729,39 @@
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
                     人でしかできないこと：先生の存在意義
                 </button>
-                <!-- ★ここから音声再生ボタンを追加します★ -->
-                <button class="audio-button" id="btn-play-audio" onclick="toggleAudio(this)">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19V6l12-3v14M9 19a2 2 0 002 2h10a2 2 0 002-2V5a2 2 0 00-2-2H9a2 2 0 00-2 2v14a2 2 0 002 2zm0 0l-3 3v-3"></path></svg>
+                <!-- 音声再生/一時停止ボタン -->
+                <button class="audio-button" id="btn-play-audio" onclick="togglePlayPause(this)">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path id="play-pause-icon-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3l14 9-14 9V3z"/>
+                    </svg>
                     AIラジオ：研究解説を聴く
                 </button>
-                <!-- ★音声再生ボタンの追加ここまで★ -->
                 <button class="scroll-button close-page-button" onclick="resetToTop()">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     ページを閉じる
                 </button>
+            </div>
+            <!-- 横スクロール進捗バー -->
+            <div class="scroll-progress-container">
+                <div class="scroll-progress-bar" id="scroll-progress-bar"></div>
+            </div>
+
+            <!-- AIラジオ再生コントロールバー -->
+            <div class="audio-player-controls" id="audio-player-controls">
+                <div class="audio-time" id="current-time">0:00</div>
+                <div class="audio-progress-bar-container">
+                    <div class="audio-progress-bar" id="audio-progress-bar"></div>
+                    <input type="range" class="audio-progress-slider" id="audio-progress-slider" value="0" min="0" max="100">
+                </div>
+                <div class="audio-time" id="total-time">0:00</div>
+                <div class="audio-buttons">
+                    <button id="btn-rewind" title="10秒巻き戻し">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.933 12.825a.997.997 0 010-1.65l5.247-3.935a1 1 0 011.57.825v7.87a1 1 0 01-1.57.825l-5.247-3.935z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.933 12.825a.997.997 0 010-1.65l5.247-3.935a1 1 0 011.57.825v7.87a1 1 0 01-1.57.825l-5.247-3.935z"></path></svg>
+                    </button>
+                    <button id="btn-forward" title="10秒早送り">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12.067 11.175a.997.997 0 010 1.65l-5.247 3.935a1 1 0 01-1.57-.825v-7.87a1 1 0 011.57-.825l5.247 3.935z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.067 11.175a.997.997 0 010 1.65l-5.247 3.935a1 1 0 01-1.57-.825v-7.87a1 1 0 011.57-.825l5.247 3.935z"></path></svg>
+                    </button>
+                </div>
             </div>
         </div>
         <!-- 固定ナビゲーションコンテナここまで -->
@@ -1109,7 +1193,6 @@
 
         <!-- 結論メッセージ -->
         <div class="conclusion-message">
-            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
             <p>
                 AIで先生の<span class="text-blue-700">「時間」と「質」を最大化</span>し、<br>
                 <span class="text-green-700">「ゆとり」ある教育</span>を創る。
@@ -1277,7 +1360,11 @@
         // 例: https://sonakagawa712-svg.github.io/ai-infographic/ai_yutori_kenkyu_mirai.m4a
         const AUDIO_URL = 'https://sonakagawa712-svg.github.io/ai-infographic/ai_yukari1.m4a'; 
         let audioPlayer = new Audio(AUDIO_URL);
-        let isPlaying = false;
+        let isPlaying = false; // 音声が再生中かどうか
+
+        // SVGアイコンのパスデータ
+        const PLAY_ICON_PATH_DATA = "M5 3l14 9-14 9V3z";
+        const PAUSE_ICON_PATH_DATA = "M6 4h4v16H6zM14 4h4v16h-4z";
 
         // すべてのセクションIDを配列にまとめる
         const allSectionIds = [
@@ -1298,17 +1385,50 @@
             'btn-play-audio' // 音声ボタンも追加
         ];
 
+        // スクロール進捗バーの要素
+        const scrollButtonGroup = document.getElementById('scroll-button-group');
+        const scrollProgressBar = document.getElementById('scroll-progress-bar');
+
+        // AIラジオのコントロール要素
+        const playPauseButton = document.getElementById('btn-play-audio');
+        const playPauseIconPath = document.getElementById('play-pause-icon-path');
+        const audioPlayerControls = document.getElementById('audio-player-controls');
+        const currentTimeDisplay = document.getElementById('current-time');
+        const totalTimeDisplay = document.getElementById('total-time');
+        const audioProgressBar = document.getElementById('audio-progress-bar');
+        const audioProgressSlider = document.getElementById('audio-progress-slider');
+        const btnRewind = document.getElementById('btn-rewind');
+        const btnForward = document.getElementById('btn-forward');
+
+        // 時間をフォーマットするヘルパー関数
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = Math.floor(seconds % 60);
+            return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+        }
+
+        // スクロール進捗バーの更新
+        function updateScrollProgressBar() {
+            if (scrollButtonGroup) {
+                const scrollWidth = scrollButtonGroup.scrollWidth - scrollButtonGroup.clientWidth;
+                if (scrollWidth > 0) {
+                    const scrollProgress = (scrollButtonGroup.scrollLeft / scrollWidth) * 100;
+                    scrollProgressBar.style.width = `${scrollProgress}%`;
+                } else {
+                    scrollProgressBar.style.width = '0%';
+                }
+            }
+        }
+
         // セクションを表示し、他のセクションを非表示にする関数
         function scrollToSection(id, clickedButton) {
-            // すべてのセクションを非表示にする
             allSectionIds.forEach(sectionId => {
                 const section = document.getElementById(sectionId);
                 if (section) {
                     section.classList.add('hidden');
-                    section.classList.remove('visible'); // visibleクラスも削除
+                    section.classList.remove('visible');
                 }
             });
-            // 個別の業務プロセスステップも非表示にする
             individualProcessStepIds.forEach(stepId => {
                 const step = document.getElementById(stepId);
                 if (step) {
@@ -1317,8 +1437,6 @@
                 }
             });
 
-
-            // すべてのボタンからアクティブクラスを削除する
             allButtonIds.forEach(buttonId => {
                 const button = document.getElementById(buttonId);
                 if (button) {
@@ -1326,21 +1444,17 @@
                 }
             });
 
-            // ターゲットセクションを表示する
             const targetSection = document.getElementById(id);
             if (targetSection) {
                 targetSection.classList.remove('hidden');
-                // アニメーションのためにvisibleクラスを追加
                 setTimeout(() => {
                     targetSection.classList.add('visible');
-                }, 10); // 短い遅延でhiddenからvisibleへ切り替え
+                }, 10);
 
-                // クリックされたボタンにアクティブクラスを追加する
                 if (clickedButton) {
                     clickedButton.classList.add('active');
                 }
 
-                // 「4つの業務プロセスの変容」がクリックされた場合、その中のすべてのステップを表示する
                 if (id === 'all-process-steps') {
                     individualProcessStepIds.forEach(stepId => {
                         const step = document.getElementById(stepId);
@@ -1353,7 +1467,7 @@
                     });
                 }
 
-                const offset = 80; // 固定ナビゲーションの高さ + いくらかのパディング
+                const offset = 80;
                 const bodyRect = document.body.getBoundingClientRect().top;
                 const elementRect = targetSection.getBoundingClientRect().top;
                 const elementPosition = elementRect - bodyRect;
@@ -1362,21 +1476,18 @@
                     behavior: 'smooth'
                 });
             }
-            // セクション移動時は音声を停止
-            // stopAudio(); // ★この行をコメントアウトまたは削除しました★
+            // セクション移動時は音声を停止しない (再生継続)
         }
 
         // トップ画面に戻る（すべてのセクションを非表示にする）関数
         function resetToTop() {
-            // すべてのセクションを非表示にする
             allSectionIds.forEach(sectionId => {
                 const section = document.getElementById(sectionId);
                 if (section) {
                     section.classList.add('hidden');
-                    section.classList.remove('visible'); // visibleクラスも削除
+                    section.classList.remove('visible');
                 }
             });
-            // 個別の業務プロセスステップも非表示にする
             individualProcessStepIds.forEach(stepId => {
                 const step = document.getElementById(stepId);
                 if (step) {
@@ -1385,7 +1496,6 @@
                 }
             });
 
-            // すべてのボタンからアクティブクラスを削除する
             allButtonIds.forEach(buttonId => {
                 const button = document.getElementById(buttonId);
                 if (button) {
@@ -1393,7 +1503,6 @@
                 }
             });
 
-            // トップ画面のコンテナを表示
             const container = document.querySelector('.container');
             if (container) {
                 container.classList.remove('hidden');
@@ -1406,49 +1515,85 @@
                 top: 0,
                 behavior: 'smooth'
             });
-            // トップに戻る時も音声を停止
+            // トップに戻る時は音声を停止
             stopAudio();
         }
 
-        // 音声再生/停止を切り替える関数
-        function toggleAudio(button) {
+        // 再生/一時停止を切り替える関数
+        function togglePlayPause(button) {
             if (isPlaying) {
-                stopAudio();
+                audioPlayer.pause();
+                isPlaying = false;
+                playPauseIconPath.setAttribute('d', PLAY_ICON_PATH_DATA); // 再生アイコンに
+                button.classList.remove('active'); // ボタンのアクティブ状態を解除
             } else {
-                playAudio(button);
+                audioPlayer.play();
+                isPlaying = true;
+                playPauseIconPath.setAttribute('d', PAUSE_ICON_PATH_DATA); // 一時停止アイコンに
+                button.classList.add('active'); // ボタンをアクティブ状態に
+                audioPlayerControls.style.display = 'flex'; // 再生バーを表示
             }
         }
 
-        // 音声を再生する関数
-        function playAudio(button) {
-            audioPlayer.play();
-            isPlaying = true;
-            button.classList.add('active');
-            // 音声再生中は他のセクションボタンのアクティブ状態を解除
-            allButtonIds.forEach(buttonId => {
-                if (buttonId !== 'btn-play-audio') {
-                    document.getElementById(buttonId)?.classList.remove('active');
-                }
-            });
-        }
-
-        // 音声を停止する関数
+        // 音声を完全に停止する関数 (再生バーも非表示)
         function stopAudio() {
             audioPlayer.pause();
             audioPlayer.currentTime = 0; // 再生位置を最初に戻す
             isPlaying = false;
-            document.getElementById('btn-play-audio')?.classList.remove('active');
+            playPauseIconPath.setAttribute('d', PLAY_ICON_PATH_DATA); // 再生アイコンに
+            playPauseButton.classList.remove('active'); // ボタンのアクティブ状態を解除
+            audioPlayerControls.style.display = 'none'; // 再生バーを非表示
         }
 
-        // 音声が終了したときにボタンのアクティブ状態を解除
+        // AIラジオのイベントリスナー
+        audioPlayer.addEventListener('loadedmetadata', () => {
+            totalTimeDisplay.textContent = formatTime(audioPlayer.duration);
+            audioProgressSlider.max = audioPlayer.duration;
+            // 初期状態では再生アイコン
+            playPauseIconPath.setAttribute('d', PLAY_ICON_PATH_DATA);
+        });
+
+        audioPlayer.addEventListener('timeupdate', () => {
+            currentTimeDisplay.textContent = formatTime(audioPlayer.currentTime);
+            audioProgressSlider.value = audioPlayer.currentTime;
+            audioProgressBar.style.width = `${(audioPlayer.currentTime / audioPlayer.duration) * 100}%`;
+        });
+
         audioPlayer.addEventListener('ended', () => {
             stopAudio();
+        });
+
+        audioProgressSlider.addEventListener('input', () => {
+            audioPlayer.currentTime = audioProgressSlider.value;
+            // スライダー操作中に再生が一時停止している場合は、再生アイコンに戻す
+            if (!isPlaying) {
+                playPauseIconPath.setAttribute('d', PLAY_ICON_PATH_DATA);
+                playPauseButton.classList.remove('active');
+            }
+        });
+
+        btnRewind.addEventListener('click', () => {
+            audioPlayer.currentTime = Math.max(0, audioPlayer.currentTime - 10); // 10秒巻き戻し
+        });
+
+        btnForward.addEventListener('click', () => {
+            audioPlayer.currentTime = Math.min(audioPlayer.duration, audioPlayer.currentTime + 10); // 10秒早送り
         });
 
         // ページロード時にすべてのセクションを非表示にする
         document.addEventListener('DOMContentLoaded', () => {
             resetToTop();
+            // 初期状態ではAIラジオコントロールバーを非表示にする
+            audioPlayerControls.style.display = 'none';
+            // スクロールイベントリスナーを設定
+            if (scrollButtonGroup) {
+                scrollButtonGroup.addEventListener('scroll', updateScrollProgressBar);
+                // 初期表示時に一度更新
+                updateScrollProgressBar();
+            }
         });
+        // ウィンドウのリサイズ時にもスクロールバーを更新
+        window.addEventListener('resize', updateScrollProgressBar);
     </script>
 </body>
 </html>
