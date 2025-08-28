@@ -16,7 +16,7 @@
             padding: 2rem;
             box-sizing: border-box;
             /* 固定ナビゲーションの高さに合わせてpadding-bottomを調整 */
-            padding-bottom: 15rem; /* デスクトップのデフォルト値 (メッセージ、ボタン、再生バー含む) */
+            padding-bottom: 5rem; /* 固定ナビゲーションのメッセージ、ボタン、再生バーがなくなった分を調整 */
         }
         .container {
             max-width: 900px; /* コンテンツに合わせて少し広めに */
@@ -360,7 +360,7 @@
             display: none;
         }
 
-        .scroll-button, .process-category-button, .audio-button, .video-button { /* audio-buttonとvideo-buttonも共通スタイルに含める */
+        .scroll-button, .process-category-button { /* メディアボタンはここから除外 */
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -377,7 +377,7 @@
             white-space: nowrap; /* ボタン内のテキストが改行されないようにする */
             flex-shrink: 0; /* ボタンが縮まないようにする */
         }
-        .scroll-button:hover, .process-category-button:hover, .audio-button:hover, .video-button:hover {
+        .scroll-button:hover, .process-category-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
         }
@@ -440,7 +440,7 @@
         .process-category-button.step-4:hover { background-color: #e67e22; border-color: #e67e22; }
 
         /* アクティブ状態のボタンのスタイル */
-        .scroll-button.active, .process-category-button.active, .audio-button.active, .video-button.active {
+        .scroll-button.active, .process-category-button.active { /* メディアボタンはここから除外 */
             filter: brightness(1.1); /* 少し明るくする */
             box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5); /* 青色の光るボーダー */
             transform: translateY(-2px);
@@ -448,6 +448,34 @@
         .process-category-button#btn-all-process-steps.active { box-shadow: 0 0 0 3px rgba(30, 144, 255, 0.5); } /* 統合ボタンのアクティブ状態 (グラデーションの開始色に合わせる) */
         .scroll-button.primary.active { box-shadow: 0 0 0 3px rgba(177, 156, 217, 0.5); } /* AIがもたらす「ゆとり」の変容ボタンのアクティブ状態 */
         .scroll-button.secondary.active { box-shadow: 0 0 0 3px rgba(154, 205, 50, 0.5); } /* 人でしかできないこと：先生の存在意義ボタンのアクティブ状態 */
+
+        /* メディアボタンの共通スタイル (固定ナビゲーションから外れたため、新しいコンテナ内で使用) */
+        .media-button {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: bold;
+            font-size: 1rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease-in-out;
+            margin: 0.25rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            border: 2px solid transparent;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+        .media-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+        }
+        .media-button.active {
+            filter: brightness(1.1);
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5);
+            transform: translateY(-2px);
+        }
 
         /* 音声再生ボタンのスタイル */
         .audio-button {
@@ -537,7 +565,7 @@
         /* レスポンシブ調整 */
         @media (max-width: 768px) {
             body {
-                padding-bottom: 12rem; /* モバイルでの固定ナビゲーションの高さに合わせて調整 (メッセージ2行分 + 再生バー) */
+                padding-bottom: 2rem; /* モバイルでの固定ナビゲーションがなくなった分を調整 */
             }
             .container {
                 padding: 1.5rem; /* モバイルでコンテナ全体のパディングを調整 */
@@ -575,9 +603,10 @@
                 height: 20px;
             }
 
-            .fixed-nav-container {
-                padding: 0.5rem 1rem 0.5rem; /* モバイル用のパディングを調整 */
+            .fixed-nav-container { /* 固定ナビゲーションのモバイル調整 */
+                padding: 0.5rem 1rem; /* モバイル用のパディングを調整 */
                 width: calc(100% - 2rem); /* 幅を調整 */
+                bottom: 1rem; /* 下からの距離 */
             }
             .fixed-nav-message-inside {
                 font-size: 0.65rem; /* スマホでさらに小さく */
@@ -596,9 +625,7 @@
                 padding-bottom: 0.5rem; /* スクロールバーのためのスペース */
             }
             .fixed-nav-container .scroll-button,
-            .fixed-nav-container .process-category-button,
-            .fixed-nav-container .audio-button,
-            .fixed-nav-container .video-button { /* audio-buttonとvideo-buttonもモバイルスタイルに含める */
+            .fixed-nav-container .process-category-button { /* メディアボタンはここから除外 */
                 flex-shrink: 0; /* ボタンが縮まないようにする */
                 font-size: 0.75rem; /* フォントサイズを小さく */
                 padding: 0.4rem 0.6rem; /* 左右のパディングをさらに減らす */
@@ -654,6 +681,19 @@
             .conclusion-message p {
                 font-size: 1.2rem; /* モバイルでフォントサイズを調整 */
             }
+
+            /* 新しいメディアコントロールエリアのモバイル調整 */
+            #media-controls-area {
+                flex-direction: column; /* ボタンを縦並びに */
+                gap: 1rem; /* ボタン間の間隔を広げる */
+                padding: 1.5rem 1rem;
+                margin-top: 2rem;
+            }
+            #media-controls-area .media-button {
+                width: 100%; /* 幅いっぱいに広げる */
+                font-size: 0.9rem;
+                padding: 0.6rem 1rem;
+            }
         }
 
         /* スクロール進捗バーのスタイル */
@@ -685,7 +725,7 @@
             border-radius: 0.75rem;
             padding: 0.75rem 1rem;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            margin-top: 0.5rem; /* ボタン群との間隔 */
+            margin-top: 1rem; /* ボタン群との間隔 */
             gap: 0.5rem;
             flex-wrap: nowrap; /* 要素が折り返さないように */
         }
@@ -742,11 +782,11 @@
             color: #555;
             white-space: nowrap;
         }
-        .audio-buttons {
+        .audio-buttons-group { /* 音声コントロールボタンをまとめるグループ */
             display: flex;
             gap: 0.25rem;
         }
-        .audio-buttons button {
+        .audio-buttons-group button {
             background-color: #34495e;
             color: white;
             padding: 0.3rem 0.5rem;
@@ -755,10 +795,10 @@
             cursor: pointer;
             transition: background-color 0.2s;
         }
-        .audio-buttons button:hover {
+        .audio-buttons-group button:hover {
             background-color: #2c3e50;
         }
-        .audio-buttons button svg {
+        .audio-buttons-group button svg {
             width: 1rem;
             height: 1rem;
         }
@@ -832,6 +872,23 @@
             text-align: center;
             margin-bottom: 1rem;
         }
+
+        /* 新しいメディアコントロールエリアのスタイル */
+        #media-controls-area {
+            display: flex;
+            flex-wrap: wrap; /* ボタンが折り返すように */
+            justify-content: center;
+            align-items: center;
+            gap: 1rem; /* ボタン間の間隔 */
+            margin-top: 3rem; /* 結論メッセージとの間隔 */
+            padding: 2rem;
+            background-color: rgba(255, 255, 255, 0.9);
+            border-radius: 1.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            max-width: 700px; /* 最大幅を制限 */
+            width: 100%;
+            box-sizing: border-box;
+        }
     </style>
 </head>
 <body>
@@ -861,18 +918,6 @@
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
                     人でしかできないこと：先生の存在意義
                 </button>
-                <!-- 音声再生/一時停止ボタン -->
-                <button class="audio-button" id="btn-play-audio" onclick="togglePlayPause(this)">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path id="play-pause-icon-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3l14 9-14 9V3z"/>
-                    </svg>
-                    AIラジオ：研究解説を聴く
-                </button>
-                <!-- AI動画ボタン -->
-                <button class="video-button" id="btn-ai-video" onclick="showVideoModal(this)">
-                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4-4-4-4M15 14l4 4-4 4M2 12h17"></path></svg>
-                    AI動画：研究解説を視る
-                </button>
                 <button class="scroll-button close-page-button" onclick="resetToTop()">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                     ページを閉じる
@@ -881,24 +926,6 @@
             <!-- 横スクロール進捗バー -->
             <div class="scroll-progress-container">
                 <div class="scroll-progress-bar" id="scroll-progress-bar"></div>
-            </div>
-
-            <!-- AIラジオ再生コントロールバー -->
-            <div class="audio-player-controls" id="audio-player-controls">
-                <div class="audio-time" id="current-time">0:00</div>
-                <div class="audio-progress-bar-container">
-                    <div class="audio-progress-bar" id="audio-progress-bar"></div>
-                    <input type="range" class="audio-progress-slider" id="audio-progress-slider" value="0" min="0" max="100">
-                </div>
-                <div class="audio-time" id="total-time">0:00</div>
-                <div class="audio-buttons">
-                    <button id="btn-rewind" title="10秒巻き戻し">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.933 12.825a.997.997 0 010-1.65l5.247-3.935a1 1 0 011.57.825v7.87a1 1 0 01-1.57.825l-5.247-3.935z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.933 12.825a.997.997 0 010-1.65l5.247-3.935a1 1 0 011.57.825v7.87a1 1 0 01-1.57.825l-5.247-3.935z"></path></svg>
-                    </button>
-                    <button id="btn-forward" title="10秒早送り">
-                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12.067 11.175a.997.997 0 010 1.65l-5.247 3.935a1 1 0 01-1.57-.825v-7.87a1 1 0 011.57-.825l5.247 3.935z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.067 11.175a.997.997 0 010 1.65l-5.247 3.935a1 1 0 01-1.57-.825v-7.87a1 1 0 011.57-.825l5.247 3.935z"></path></svg>
-                    </button>
-                </div>
             </div>
         </div>
         <!-- 固定ナビゲーションコンテナここまで -->
@@ -1248,7 +1275,7 @@
                 </div>
                 <div class="explanation-row">
                     <div class="explanation-box">
-                        <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><polyline points="13 2 13 9 20 9"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>
+                        <svg class="icon-small" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/><polyline points="13 2 13 9 20 9"/></svg>
                         Before: 文書の作成や要点抽出に多くの時間を要する
                     </div>
                     <div class="explanation-arrow">
@@ -1334,6 +1361,40 @@
                 AIで先生の<span class="text-blue-700">「時間」と「質」を最大化</span>し、<br>
                 <span class="text-green-700">「ゆとり」ある教育</span>を創る。
             </p>
+        </div>
+
+        <!-- AI動画とAIラジオのボタンを配置する新しいコンテナ -->
+        <div id="media-controls-area">
+            <!-- 音声再生/一時停止ボタン -->
+            <button class="media-button audio-button" id="btn-play-audio" onclick="togglePlayPause(this)">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path id="play-pause-icon-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3l14 9-14 9V3z"/>
+                </svg>
+                AIラジオ：研究解説を聴く
+            </button>
+            <!-- AI動画ボタン -->
+            <button class="media-button video-button" id="btn-ai-video" onclick="showVideoModal(this)">
+                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4-4-4-4M15 14l4 4-4 4M2 12h17"></path></svg>
+                AI動画：研究解説を視る
+            </button>
+
+            <!-- AIラジオ再生コントロールバー -->
+            <div class="audio-player-controls" id="audio-player-controls">
+                <div class="audio-time" id="current-time">0:00</div>
+                <div class="audio-progress-bar-container">
+                    <div class="audio-progress-bar" id="audio-progress-bar"></div>
+                    <input type="range" class="audio-progress-slider" id="audio-progress-slider" value="0" min="0" max="100">
+                </div>
+                <div class="audio-time" id="total-time">0:00</div>
+                <div class="audio-buttons-group">
+                    <button id="btn-rewind" title="10秒巻き戻し">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11.933 12.825a.997.997 0 010-1.65l5.247-3.935a1 1 0 011.57.825v7.87a1 1 0 01-1.57.825l-5.247-3.935z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7.933 12.825a.997.997 0 010-1.65l5.247-3.935a1 1 0 011.57.825v7.87a1 1 0 01-1.57.825l-5.247-3.935z"></path></svg>
+                    </button>
+                    <button id="btn-forward" title="10秒早送り">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12.067 11.175a.997.997 0 010 1.65l-5.247 3.935a1 1 0 01-1.57-.825v-7.87a1 1 0 011.57-.825l5.247 3.935z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16.067 11.175a.997.997 0 010 1.65l-5.247 3.935a1 1 0 01-1.57-.825v-7.87a1 1 0 011.57-.825l5.247 3.935z"></path></svg>
+                    </button>
+                </div>
+            </div>
         </div>
 
         <!-- AIがもたらす「ゆとり」が先生にもたらす変容 -->
@@ -1535,13 +1596,11 @@
             'process-step-1', 'process-step-2', 'process-step-3', 'process-step-4'
         ];
 
-        // すべてのボタンIDを配列にまとめる
-        const allButtonIds = [
-            'btn-all-process-steps', // 新しく追加した統合ボタン
+        // 固定ナビゲーションにあるボタンIDを配列にまとめる
+        const fixedNavButtonIds = [
+            'btn-all-process-steps',
             'btn-teacher-transformation',
-            'btn-teacher-purpose',
-            'btn-play-audio', // 音声ボタンも追加
-            'btn-ai-video'    // 動画ボタンも追加
+            'btn-teacher-purpose'
         ];
 
         // スクロール進捗バーの要素
@@ -1621,14 +1680,18 @@
                 }
             });
             hideVideoModal(false); // 動画モーダルを非表示にする (動画は停止するが、ボタンのアクティブ状態は維持しない)
+            stopAudio(); // セクション表示時は音声を停止
 
-            // すべてのボタンのアクティブ状態を解除
-            allButtonIds.forEach(buttonId => {
+            // 固定ナビゲーションのボタンのアクティブ状態を解除
+            fixedNavButtonIds.forEach(buttonId => {
                 const button = document.getElementById(buttonId);
                 if (button) {
                     button.classList.remove('active');
                 }
             });
+            // メディアボタンのアクティブ状態も解除
+            playPauseButton.classList.remove('active');
+            btnAiVideo.classList.remove('active');
 
             // クリックされたボタンをアクティブにする
             if (clickedButton) {
@@ -1664,8 +1727,6 @@
                     behavior: 'smooth'
                 });
             }
-            // セクション移動時は音声を停止しない (再生継続)
-            stopVideo(); // セクション表示時は動画を停止
         }
 
         // トップ画面に戻る（すべてのセクションを非表示にする）関数
@@ -1686,12 +1747,15 @@
             });
             hideVideoModal(); // 動画モーダルも非表示にする
 
-            allButtonIds.forEach(buttonId => {
+            // すべてのボタンのアクティブ状態を解除
+            fixedNavButtonIds.forEach(buttonId => {
                 const button = document.getElementById(buttonId);
                 if (button) {
                     button.classList.remove('active');
                 }
             });
+            playPauseButton.classList.remove('active');
+            btnAiVideo.classList.remove('active');
 
             const container = document.querySelector('.container');
             if (container) {
@@ -1728,15 +1792,14 @@
                 playPauseIconPath.setAttribute('d', PAUSE_ICON_PATH_DATA); // 一時停止アイコンに
                 button.classList.add('active'); // ボタンをアクティブ状態に
                 audioPlayerControls.style.display = 'flex'; // 再生バーを表示
-                // 他のセクションのアクティブ状態を解除
-                allButtonIds.forEach(buttonId => {
-                    if (buttonId !== 'btn-play-audio') {
-                        const otherButton = document.getElementById(buttonId);
-                        if (otherButton) {
-                            otherButton.classList.remove('active');
-                        }
+                // 他のボタンのアクティブ状態を解除
+                fixedNavButtonIds.forEach(buttonId => {
+                    const otherButton = document.getElementById(buttonId);
+                    if (otherButton) {
+                        otherButton.classList.remove('active');
                     }
                 });
+                btnAiVideo.classList.remove('active'); // AI動画ボタンも非アクティブに
             }
         }
 
@@ -1760,12 +1823,14 @@
             stopAudio(); // ラジオを停止
 
             // すべてのボタンのアクティブ状態を解除
-            allButtonIds.forEach(buttonId => {
+            fixedNavButtonIds.forEach(buttonId => {
                 const button = document.getElementById(buttonId);
                 if (button) {
                     button.classList.remove('active');
                 }
             });
+            playPauseButton.classList.remove('active'); // AIラジオボタンも非アクティブに
+
             if (clickedButton) {
                 clickedButton.classList.add('active');
             }
