@@ -360,7 +360,7 @@
             display: none;
         }
 
-        .scroll-button, .process-category-button, .audio-button { /* audio-buttonも共通スタイルに含める */
+        .scroll-button, .process-category-button, .audio-button, .video-button { /* audio-buttonとvideo-buttonも共通スタイルに含める */
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -377,7 +377,7 @@
             white-space: nowrap; /* ボタン内のテキストが改行されないようにする */
             flex-shrink: 0; /* ボタンが縮まないようにする */
         }
-        .scroll-button:hover, .process-category-button:hover, .audio-button:hover {
+        .scroll-button:hover, .process-category-button:hover, .audio-button:hover, .video-button:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
         }
@@ -440,7 +440,7 @@
         .process-category-button.step-4:hover { background-color: #e67e22; border-color: #e67e22; }
 
         /* アクティブ状態のボタンのスタイル */
-        .scroll-button.active, .process-category-button.active, .audio-button.active {
+        .scroll-button.active, .process-category-button.active, .audio-button.active, .video-button.active {
             filter: brightness(1.1); /* 少し明るくする */
             box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.5); /* 青色の光るボーダー */
             transform: translateY(-2px);
@@ -461,6 +461,20 @@
         }
         .audio-button.active {
             box-shadow: 0 0 0 3px rgba(255, 111, 97, 0.5); /* アクティブ時の影 */
+        }
+
+        /* 動画再生ボタンのスタイル */
+        .video-button {
+            background: linear-gradient(135deg, #00C6FF 0%, #0072FF 100%); /* 明るい青のグラデーション */
+            color: white;
+            border-color: #00C6FF;
+        }
+        .video-button:hover {
+            background: linear-gradient(135deg, #00ACDD 0%, #0056D4 100%);
+            border-color: #00ACDD;
+        }
+        .video-button.active {
+            box-shadow: 0 0 0 3px rgba(0, 198, 255, 0.5); /* アクティブ時の影 */
         }
 
 
@@ -583,7 +597,8 @@
             }
             .fixed-nav-container .scroll-button,
             .fixed-nav-container .process-category-button,
-            .fixed-nav-container .audio-button { /* audio-buttonもモバイルスタイルに含める */
+            .fixed-nav-container .audio-button,
+            .fixed-nav-container .video-button { /* audio-buttonとvideo-buttonもモバイルスタイルに含める */
                 flex-shrink: 0; /* ボタンが縮まないようにする */
                 font-size: 0.75rem; /* フォントサイズを小さく */
                 padding: 0.4rem 0.6rem; /* 左右のパディングをさらに減らす */
@@ -622,6 +637,14 @@
             }
             .audio-progress-slider {
                 width: 100%;
+            }
+            /* AI動画モーダルのモバイル調整 */
+            .ai-video-modal-content {
+                width: 95%; /* モバイルで幅を広く */
+                height: auto; /* 高さは自動調整 */
+            }
+            .ai-video-modal video {
+                height: auto; /* 高さは自動調整 */
             }
 
             /* 結論メッセージのモバイル調整 */
@@ -744,6 +767,71 @@
         .audio-button.active {
             box-shadow: 0 0 0 3px rgba(255, 111, 97, 0.5); /* アクティブ時の影 */
         }
+
+        /* AI動画モーダルとオーバーレイのスタイル */
+        .ai-video-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.75); /* 半透明の黒いオーバーレイ */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000; /* ナビゲーションバーより手前に表示 */
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease-in-out, visibility 0.3s ease-in-out;
+        }
+        .ai-video-modal.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .ai-video-modal-content {
+            background-color: #ffffff;
+            border-radius: 1.5rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            padding: 1.5rem;
+            position: relative;
+            max-width: 800px; /* 最大幅を制限 */
+            width: 90%; /* レスポンシブ対応 */
+            height: auto; /* 動画の縦横比に応じて高さを自動調整 */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .ai-video-modal-close {
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            font-size: 2rem;
+            color: #34495e;
+            cursor: pointer;
+            transition: color 0.2s;
+            line-height: 1; /* アイコンの縦方向の中央揃え */
+        }
+        .ai-video-modal-close:hover {
+            color: #e74c3c;
+        }
+
+        .ai-video-modal video {
+            width: 100%;
+            height: auto; /* 縦横比を維持 */
+            border-radius: 1rem;
+            margin-top: 1rem; /* タイトルと動画の間隔 */
+        }
+        .ai-video-modal h2 {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2c3e50;
+            text-align: center;
+            margin-bottom: 1rem;
+        }
     </style>
 </head>
 <body>
@@ -779,6 +867,11 @@
                         <path id="play-pause-icon-path" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 3l14 9-14 9V3z"/>
                     </svg>
                     AIラジオ：研究解説を聴く
+                </button>
+                <!-- AI動画ボタン -->
+                <button class="video-button" id="btn-ai-video" onclick="showVideoModal(this)">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 10l4-4-4-4M15 14l4 4-4 4M2 12h17"></path></svg>
+                    AI動画：研究を深掘り
                 </button>
                 <button class="scroll-button close-page-button" onclick="resetToTop()">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
@@ -1403,12 +1496,29 @@
         </div>
     </div>
 
+    <!-- AI動画モーダル -->
+    <div id="ai-video-modal" class="ai-video-modal">
+        <div class="ai-video-modal-content">
+            <button class="ai-video-modal-close" onclick="hideVideoModal()">&times;</button>
+            <h2>AI動画：研究を深掘り</h2>
+            <video id="ai-video-player" controls preload="metadata" width="720" height="480">
+                <!-- ここにmp4動画のURLを挿入してください。例: https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4 -->
+                <source src="https://sonakagawa712-svg.github.io/ai-infographic/AI-movie.mp4" type="video/mp4">
+                お使いのブラウザは動画タグをサポートしていません。
+            </video>
+        </div>
+    </div>
+
     <script>
         // 音声ファイルのURL (GitHub Pagesで公開された音声ファイルのURLに置き換えてください)
-        // 例: https://sonakagawa712-svg.github.io/ai-infographic/ai_yutori_kenkyu_mirai.m4a
         const AUDIO_URL = 'https://sonakagawa712-svg.github.io/ai-infographic/ai_yukari1.m4a'; 
         let audioPlayer = new Audio(AUDIO_URL);
-        let isPlaying = false; // 音声が再生中かどうか
+        let isPlayingAudio = false; // 音声が再生中かどうか
+
+        // 動画ファイルのURL (mp4動画のURLに置き換えてください)
+        const VIDEO_URL = 'https://sonakagawa712-svg.github.io/ai-infographic/AI-movie.mp4'; 
+        let videoPlayer = document.getElementById('ai-video-player');
+        videoPlayer.src = VIDEO_URL; // JavaScriptで動画ソースを設定
 
         // SVGアイコンのパスデータ
         const PLAY_ICON_PATH_DATA = "M5 3l14 9-14 9V3z";
@@ -1430,7 +1540,8 @@
             'btn-all-process-steps', // 新しく追加した統合ボタン
             'btn-teacher-transformation',
             'btn-teacher-purpose',
-            'btn-play-audio' // 音声ボタンも追加
+            'btn-play-audio', // 音声ボタンも追加
+            'btn-ai-video'    // 動画ボタンも追加
         ];
 
         // スクロール進捗バーの要素
@@ -1447,6 +1558,11 @@
         const audioProgressSlider = document.getElementById('audio-progress-slider');
         const btnRewind = document.getElementById('btn-rewind');
         const btnForward = document.getElementById('btn-forward');
+
+        // AI動画のモーダル要素
+        const aiVideoModal = document.getElementById('ai-video-modal');
+        const btnAiVideo = document.getElementById('btn-ai-video');
+
 
         // 時間をフォーマットするヘルパー関数
         function formatTime(seconds) {
@@ -1468,8 +1584,28 @@
             }
         }
 
+        // 音声を完全に停止する関数
+        function stopAudio() {
+            audioPlayer.pause();
+            audioPlayer.currentTime = 0; // 再生位置を最初に戻す
+            isPlayingAudio = false;
+            playPauseIconPath.setAttribute('d', PLAY_ICON_PATH_DATA); // 再生アイコンに
+            playPauseButton.classList.remove('active'); // ボタンのアクティブ状態を解除
+            audioPlayerControls.style.display = 'none'; // 再生バーを非表示
+        }
+
+        // 動画を完全に停止する関数
+        function stopVideo() {
+            if (!videoPlayer.paused) {
+                videoPlayer.pause();
+            }
+            videoPlayer.currentTime = 0; // 再生位置を最初に戻す
+            btnAiVideo.classList.remove('active'); // ボタンのアクティブ状態を解除
+        }
+
         // セクションを表示し、他のセクションを非表示にする関数
         function scrollToSection(id, clickedButton) {
+            // 他のセクションと動画モーダルを非表示にする
             allSectionIds.forEach(sectionId => {
                 const section = document.getElementById(sectionId);
                 if (section) {
@@ -1484,7 +1620,9 @@
                     step.classList.remove('visible');
                 }
             });
+            hideVideoModal(false); // 動画モーダルを非表示にする (動画は停止するが、ボタンのアクティブ状態は維持しない)
 
+            // すべてのボタンのアクティブ状態を解除
             allButtonIds.forEach(buttonId => {
                 const button = document.getElementById(buttonId);
                 if (button) {
@@ -1492,16 +1630,18 @@
                 }
             });
 
+            // クリックされたボタンをアクティブにする
+            if (clickedButton) {
+                clickedButton.classList.add('active');
+            }
+
+            // ターゲットセクションを表示する
             const targetSection = document.getElementById(id);
             if (targetSection) {
                 targetSection.classList.remove('hidden');
                 setTimeout(() => {
                     targetSection.classList.add('visible');
                 }, 10);
-
-                if (clickedButton) {
-                    clickedButton.classList.add('active');
-                }
 
                 if (id === 'all-process-steps') {
                     individualProcessStepIds.forEach(stepId => {
@@ -1525,6 +1665,7 @@
                 });
             }
             // セクション移動時は音声を停止しない (再生継続)
+            stopVideo(); // セクション表示時は動画を停止
         }
 
         // トップ画面に戻る（すべてのセクションを非表示にする）関数
@@ -1543,6 +1684,7 @@
                     step.classList.remove('visible');
                 }
             });
+            hideVideoModal(); // 動画モーダルも非表示にする
 
             allButtonIds.forEach(buttonId => {
                 const button = document.getElementById(buttonId);
@@ -1563,35 +1705,84 @@
                 top: 0,
                 behavior: 'smooth'
             });
-            // トップに戻る時は音声を停止
+            // トップに戻る時は音声と動画を停止
             stopAudio();
+            stopVideo();
         }
 
-        // 再生/一時停止を切り替える関数
+        // 再生/一時停止を切り替える関数 (AIラジオ)
         function togglePlayPause(button) {
-            if (isPlaying) {
+            // 動画が再生中の場合は停止する
+            if (aiVideoModal.classList.contains('visible')) {
+                hideVideoModal();
+            }
+
+            if (isPlayingAudio) {
                 audioPlayer.pause();
-                isPlaying = false;
+                isPlayingAudio = false;
                 playPauseIconPath.setAttribute('d', PLAY_ICON_PATH_DATA); // 再生アイコンに
                 button.classList.remove('active'); // ボタンのアクティブ状態を解除
             } else {
                 audioPlayer.play();
-                isPlaying = true;
+                isPlayingAudio = true;
                 playPauseIconPath.setAttribute('d', PAUSE_ICON_PATH_DATA); // 一時停止アイコンに
                 button.classList.add('active'); // ボタンをアクティブ状態に
                 audioPlayerControls.style.display = 'flex'; // 再生バーを表示
+                // 他のセクションのアクティブ状態を解除
+                allButtonIds.forEach(buttonId => {
+                    if (buttonId !== 'btn-play-audio') {
+                        const otherButton = document.getElementById(buttonId);
+                        if (otherButton) {
+                            otherButton.classList.remove('active');
+                        }
+                    }
+                });
             }
         }
 
-        // 音声を完全に停止する関数 (再生バーも非表示)
-        function stopAudio() {
-            audioPlayer.pause();
-            audioPlayer.currentTime = 0; // 再生位置を最初に戻す
-            isPlaying = false;
-            playPauseIconPath.setAttribute('d', PLAY_ICON_PATH_DATA); // 再生アイコンに
-            playPauseButton.classList.remove('active'); // ボタンのアクティブ状態を解除
-            audioPlayerControls.style.display = 'none'; // 再生バーを非表示
+        // AI動画モーダルを表示する関数
+        function showVideoModal(clickedButton) {
+            // 他のセクションとAIラジオを非表示・停止する
+            allSectionIds.forEach(sectionId => {
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    section.classList.add('hidden');
+                    section.classList.remove('visible');
+                }
+            });
+            individualProcessStepIds.forEach(stepId => {
+                const step = document.getElementById(stepId);
+                if (step) {
+                    step.classList.add('hidden');
+                    step.classList.remove('visible');
+                }
+            });
+            stopAudio(); // ラジオを停止
+
+            // すべてのボタンのアクティブ状態を解除
+            allButtonIds.forEach(buttonId => {
+                const button = document.getElementById(buttonId);
+                if (button) {
+                    button.classList.remove('active');
+                }
+            });
+            if (clickedButton) {
+                clickedButton.classList.add('active');
+            }
+
+            aiVideoModal.classList.add('visible');
+            videoPlayer.play(); // 動画を再生
         }
+
+        // AI動画モーダルを非表示にする関数
+        function hideVideoModal(deactivateButton = true) {
+            aiVideoModal.classList.remove('visible');
+            stopVideo(); // 動画を停止
+            if (deactivateButton) {
+                btnAiVideo.classList.remove('active'); // ボタンのアクティブ状態を解除
+            }
+        }
+
 
         // AIラジオのイベントリスナー
         audioPlayer.addEventListener('loadedmetadata', () => {
@@ -1614,7 +1805,7 @@
         audioProgressSlider.addEventListener('input', () => {
             audioPlayer.currentTime = audioProgressSlider.value;
             // スライダー操作中に再生が一時停止している場合は、再生アイコンに戻す
-            if (!isPlaying) {
+            if (!isPlayingAudio) {
                 playPauseIconPath.setAttribute('d', PLAY_ICON_PATH_DATA);
                 playPauseButton.classList.remove('active');
             }
@@ -1645,3 +1836,4 @@
     </script>
 </body>
 </html>
+
