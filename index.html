@@ -15,8 +15,7 @@
             min-height: 100vh;
             padding: 2rem;
             box-sizing: border-box;
-            /* 固定ナビゲーションの高さに合わせてpadding-bottomを調整 */
-            padding-bottom: 5rem; /* 固定ナビゲーションのメッセージ、ボタン、再生バーがなくなった分を調整 */
+            /* padding-bottomはJavaScriptで動的に設定されます */
         }
         .container {
             max-width: 900px; /* コンテンツに合わせて少し広めに */
@@ -653,11 +652,11 @@
                 order: -1; /* 再生時間を上に配置 */
                 margin-bottom: 0.25rem;
             }
-            .audio-buttons {
+            .audio-buttons-group {
                 width: 100%;
                 justify-content: center;
             }
-            .audio-buttons button {
+            .audio-buttons-group button {
                 padding: 0.3rem 0.6rem;
                 font-size: 0.7rem;
                 margin: 0 0.1rem;
@@ -1643,6 +1642,15 @@
             }
         }
 
+        // 固定ナビゲーションの高さを取得し、bodyのpadding-bottomに設定する関数
+        function adjustBodyPadding() {
+            const fixedNav = document.querySelector('.fixed-nav-container');
+            if (fixedNav) {
+                const navHeight = fixedNav.offsetHeight; // 固定ナビゲーションの実際の高さを取得
+                document.body.style.paddingBottom = `${navHeight + 16}px`; // 余裕を持たせて16px追加
+            }
+        }
+
         // 音声を完全に停止する関数
         function stopAudio() {
             audioPlayer.pause();
@@ -1680,7 +1688,7 @@
                 }
             });
             hideVideoModal(false); // 動画モーダルを非表示にする (動画は停止するが、ボタンのアクティブ状態は維持しない)
-            stopAudio(); // セクション表示時は音声を停止
+            // stopAudio(); // <-- この行を削除して、ラジオが停止しないようにしました
 
             // 固定ナビゲーションのボタンのアクティブ状態を解除
             fixedNavButtonIds.forEach(buttonId => {
@@ -1690,7 +1698,7 @@
                 }
             });
             // メディアボタンのアクティブ状態も解除
-            playPauseButton.classList.remove('active');
+            // playPauseButton.classList.remove('active'); // ラジオは停止しないのでアクティブ状態も解除しない
             btnAiVideo.classList.remove('active');
 
             // クリックされたボタンをアクティブにする
@@ -1895,9 +1903,13 @@
                 // 初期表示時に一度更新
                 updateScrollProgressBar();
             }
+            adjustBodyPadding(); // ページロード時にpaddingを調整
         });
-        // ウィンドウのリサイズ時にもスクロールバーを更新
-        window.addEventListener('resize', updateScrollProgressBar);
+        // ウィンドウのリサイズ時にもスクロールバーとpaddingを更新
+        window.addEventListener('resize', () => {
+            updateScrollProgressBar();
+            adjustBodyPadding();
+        });
     </script>
 </body>
 </html>
